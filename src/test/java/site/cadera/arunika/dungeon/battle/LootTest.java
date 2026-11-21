@@ -1,0 +1,28 @@
+package site.cadera.arunika.dungeon.battle;
+import java.util.*;
+import java.nio.file.*;
+import site.cadera.arunika.dungeon.core.SessionRegistry;
+import site.cadera.arunika.dungeon.privategame.TicketLedger;
+import static site.cadera.arunika.dungeon.battle.LootPlan.*;
+import static site.cadera.arunika.dungeon.core.SessionRegistry.Mode.*;
+public final class LootTest {
+ static int count;
+ static void ok(boolean b,String name){if(!b)throw new AssertionError(name);count++;System.out.println("PASS "+name);}
+ static class Fake extends BattleTest.Fake {
+  final List<String> events=new ArrayList<>();boolean expose=true;int collection=45;
+  @Override public int collectionSeconds(SessionRegistry.Session s){return collection;}
+  @Override public boolean drop(SessionRegistry.Session s,BattlePlan.Arena a,Trigger t,int wave,UUID mob){events.add(s.mode()+":"+t+":"+wave);return expose;}
+ }
+ static void advance(BattleEngine e,Fake f,long now){for(int i=0;i<3;i++)e.tick(now+i,true);f.killAll(e,now+3);e.tick(now+4,true);f.killAll(e,now+5);e.tick(now+6,true);}
+ public static void main(String[] args)throws Exception{
+  var zero=new Entry(Type.VANILLA,"STONE","",0,1,1);var full=new Entry(Type.VANILLA,"DIAMOND","",100,2,5);var table=new Table(Trigger.WAVE_CLEAR,List.of(zero,full));var rng=new Random(42);boolean range=true,hasMin=false,hasMax=false;for(int i=0;i<1000;i++){var rolls=table.roll(rng);range &= rolls.size()==1&&rolls.getFirst().entry().equals(full)&&rolls.getFirst().amount()>=2&&rolls.getFirst().amount()<=5;hasMin|=rolls.getFirst().amount()==2;hasMax|=rolls.getFirst().amount()==5;}ok(range,"0% never drops; 100% always drops");ok(hasMin&&hasMax,"random amount includes both endpoints");var half=new Table(Trigger.MOB_KILL,List.of(new Entry(Type.VANILLA,"GOLD_INGOT","",50,1,1)));int hits=0;for(int i=0;i<10000;i++)hits+=half.roll(rng).size();ok(hits>4700&&hits<5300,"50% chance statistical sanity");
+  var policy=new LootPlan(3,45,5,Map.of(1,table,2,half),new Table(Trigger.BOSS_KILL,List.of(full)));ok(policy.table(Trigger.MOB_KILL,1).entries().isEmpty()&&policy.table(Trigger.WAVE_CLEAR,1).entries().size()==2,"wave trigger isolation");ok(policy.table(Trigger.BOSS_KILL,99).entries().size()==1,"boss table independent of wave");try{new LootPlan(45,45,5,Map.of(),policy.boss());throw new AssertionError();}catch(IllegalArgumentException ex){ok(true,"pickup delay must fit collection window");}
+  var r=BattleTest.registry();var f=new Fake();var e=new BattleEngine(r,f,10,5);var a=BattleTest.arena("shared",SHARED,0);var p=BattleTest.arena("private",PRIVATE,30);var plan=BattleTest.plan("bee",a,p);UUID player=UUID.randomUUID();f.present.add(player);var s=r.reserve("bee",SHARED,player,Set.of(player));e.start(s,plan,a,0);advance(e,f,3000);ok(Collections.frequency(f.events,"SHARED:WAVE_CLEAR:1")==1&&Collections.frequency(f.events,"SHARED:WAVE_CLEAR:2")==1,"each wave-clear callback once");ok(Collections.frequency(f.events,"SHARED:MOB_KILL:1")==3,"one mob-kill callback per tracked death");UUID boss=f.live.keySet().iterator().next();f.kill(e,boss,3010);e.death(boss,3010);ok(Collections.frequency(f.events,"SHARED:BOSS_KILL:3")==1,"duplicate boss death cannot repeat reward");ok(e.collecting(s.id())&&r.participant(player).orElseThrow().state()==SessionRegistry.State.LOOT,"session remains reserved during collection");ok(r.remaining("bee").toSeconds()>=1799,"Shared cooldown starts before collection ends");ok(e.eligible(player,s.id())&&!e.eligible(UUID.randomUUID(),s.id()),"only living registered participants eligible");e.tick(48009,true);ok(!e.idle(),"arena reserved before final second");e.tick(48010,true);ok(e.idle()&&r.participant(player).isEmpty()&&f.finished.getLast().phase()==BattleEngine.Phase.COMPLETED,"collection timeout releases arena and participants");
+  f.events.clear();s=r.reserve("bee",PRIVATE,player,Set.of(player));e.start(s,plan,p,50000);e.tick(53000,true);var mob=f.live.keySet().iterator().next();f.kill(e,mob,53001);e.death(mob,53001);ok(f.events.size()==1,"duplicate minion death cannot repeat reward");e.abort(s.id(),53002,"Stopped by admin");ok(f.finished.getLast().reason().startsWith("Loot exposed;"),"refund blocked after loot exposure");
+  f.events.clear();s=r.reserve("bee",PRIVATE,player,Set.of(player));e.start(s,plan,p,60000,false);advance(e,f,63000);f.killAll(e,63010);ok(f.events.isEmpty()&&e.idle(),"admin preview bypass cannot generate loot");
+  s=r.reserve("bee",PRIVATE,player,Set.of(player));e.start(s,plan,p,70000);advance(e,f,73000);f.killAll(e,73010);e.abort(s.id(),73011,"Shutdown");ok(f.finished.getLast().phase()==BattleEngine.Phase.COMPLETED,"shutdown after boss kill cannot refund successful run");
+  s=r.reserve("bee",PRIVATE,player,Set.of(player));e.start(s,plan,p,80000);advance(e,f,83000);f.killAll(e,83010);e.eliminate(player);e.tick(83011,true);ok(e.idle()&&f.finished.getLast().phase()==BattleEngine.Phase.COMPLETED,"all players leave during loot finalizes victory");
+  var root=Files.createTempDirectory("loot-ticket-test");try{var ledger=new TicketLedger(root);var ticket=ledger.issuePhysical();ok(ledger.available(ticket)&&ledger.read(ticket.serial()).claimant()==null,"physical ticket has distinct valid serial and no claimant");var another=ledger.issuePhysical();ok(!ticket.serial().equals(another.serial()),"different physical drops have unique serials");UUID session=UUID.randomUUID();ledger.hold(ticket,session,player);ledger.commit(ticket,session);ok(!new TicketLedger(root).available(ticket),"duplicate ticket cannot redeem after restart");}finally{try(var files=Files.walk(root)){for(var x:files.sorted(Comparator.reverseOrder()).toList())Files.delete(x);}}
+  System.out.println("TOTAL "+count+" PASS");
+ }
+}

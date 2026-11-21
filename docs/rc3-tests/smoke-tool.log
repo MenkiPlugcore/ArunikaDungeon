@@ -1,0 +1,10 @@
+test_expected_exchange_lock_not_fatal (__main__.SmokeTests.test_expected_exchange_lock_not_fatal) ... ok
+test_fatal (__main__.SmokeTests.test_fatal) ... ok
+test_input_hash_and_manifest (__main__.SmokeTests.test_input_hash_and_manifest) ... ok
+test_input_missing_hash (__main__.SmokeTests.test_input_missing_hash) ... ok
+test_status (__main__.SmokeTests.test_status) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.002s
+
+OK

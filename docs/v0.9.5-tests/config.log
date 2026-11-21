@@ -1,0 +1,69 @@
+PASS five initial folders
+PASS v1 custom settings retained
+PASS schema v1 to v2
+PASS unknown admin keys preserved
+PASS original config byte-identical backup
+PASS independent shared/private drops
+PASS boss drop template
+PASS idempotent restart; no rewrites
+PASS wave extension writes only 4 new drop files and waves.yml
+PASS wave 5 created
+PASS custom drop remains byte-identical
+PASS private loot unaffected
+PASS reduced waves do not delete old loot
+PASS custom floor created
+PASS custom floor retained after restart
+PASS duplicate ID rejected
+PASS duplicate floor rejected
+PASS path traversal rejected
+PASS future schema rejected
+PASS future config not overwritten
+PASS shared cap rejected
+PASS malformed or invalid config rejected
+PASS invalid source not overwritten
+PASS invalid chance rejected
+PASS selective reload refuses other pending migrations
+PASS interrupted transaction restored original
+PASS interrupted transaction removed new file and marker
+PASS unmanaged plan refused before original write
+PASS injected commit failure
+PASS immediate rollback restores originals and clears journal
+PASS v0.2 config receives disabled battle template
+PASS battle migration preserves custom drop bytes
+PASS battle snapshot parses existing wave and boss config
+PASS floor enable cannot activate public preview
+PASS shared default off; configured floor countdown loaded
+PASS custom floor countdown preserved
+PASS disabled Shared mode excluded
+PASS v0.3 config receives disabled shared-preview
+PASS shared-preview requires battle-preview
+PASS explicit dual preview enables staging config
+PASS v0.4 config gains disabled private preview
+PASS private preview needs battle preview
+PASS private mode limit honored
+PASS universal ticket material preserved
+PASS disabled Private mode excluded
+PASS invalid boss location rejected before commit
+PASS v0.5 migration disables loot preview and sets entity budget
+PASS independent configured loot parsed into immutable plans
+PASS editor automatic backup
+PASS editor saved independent table
+PASS editor rejects invalid chance
+PASS bad editor input does not overwrite table
+PASS editor remove persists
+PASS editor traversal rejected
+PASS loot-preview requires battle-preview
+PASS v0.7 gateway config migrated disabled
+PASS gateway migration preserves admin keys
+PASS incomplete enabled gateway refused
+PASS gateway requires battle preview and arena
+PASS valid gateway and exact hub exit loaded
+PASS return Waystone binding preserved
+PASS unknown return arena rejected
+PASS hub cannot also be return stone
+PASS hub inside arena rejected
+PASS arena exit different from hub rejected
+PASS automatic retention max five
+PASS legacy backup not pruned
+PASS symlink configuration refused
+TOTAL 68 PASS (FixtureCodec)

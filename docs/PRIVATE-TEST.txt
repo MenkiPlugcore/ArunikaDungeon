@@ -1,0 +1,42 @@
+PASS party blocks Shared queue
+PASS party blocks unrelated reservation
+PASS one party per UUID
+PASS invitation expires
+PASS accept invite
+PASS leader only invites
+PASS decline invitation
+PASS membership change clears ready
+PASS five members maximum
+PASS ready check required
+PASS leader only starts
+PASS queued roster immutable
+PASS busy arena queues without charging
+PASS performance guard delays dispatch
+PASS other floor not blocked
+PASS solo ticket spent
+PASS one ticket pays whole party
+PASS active participant indexed
+PASS copied spent ticket rejected
+PASS refund invalidates old copies
+PASS double refund rejected
+PASS only payer may claim refund
+PASS refund claim preserved
+PASS refund survives restart
+PASS delivered claim cannot replay
+PASS session mismatch rejected
+PASS interrupted hold recovered
+PASS interrupted hold refund generation
+PASS recovery idempotent
+PASS spent ticket not automatically refunded on restart
+PASS completed ticket terminal state
+PASS completed encounter cannot be refunded
+PASS unknown serial rejected
+PASS per-floor lower limit respected
+PASS transfer leader
+PASS kick releases UUID
+PASS moved ticket cancels queue without charge
+PASS failed start releases reservation and refunds
+PASS leader disconnect disbands party
+PASS inactive party expires
+PASS shutdown clears parties
+Private tests passed: 41

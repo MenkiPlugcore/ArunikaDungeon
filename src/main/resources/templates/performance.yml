@@ -1,0 +1,7 @@
+schema-version: 1
+# Limits apply to directly tracked preview entities only.
+limits:
+  max-concurrent-private: 3
+  max-minions-per-wave-batch: 25
+  shared-player-cap: -1
+  main-thread-spawn-budget: 8

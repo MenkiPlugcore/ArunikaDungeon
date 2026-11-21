@@ -1,0 +1,49 @@
+name: Guardian Awakening canonical staging build
+on:
+  workflow_dispatch:
+  push:
+    branches: [main, release/1.0.0-guardian-awakening]
+    paths: ['src/**', 'tools/**', 'docs/**', 'pom.xml', '.github/workflows/release-1.0.0.yml', 'README.md', 'CHANGELOG.md', 'SECURITY.md']
+  pull_request:
+    paths: ['src/**', 'tools/**', 'pom.xml', '.github/workflows/release-1.0.0.yml']
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+      - name: Compile, run real-dependency regression suites, verify artifact
+        run: bash tools/build-verified.sh
+      - name: Package exact source and reports
+        run: python3 tools/package-release.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ArunikaDungeon-1.0.0-verified-staging
+          path: dist/
+          if-no-files-found: error
+      - name: Prepare draft release only; client acceptance remains open
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/release/1.0.0-guardian-awakening'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if gh release view v1.0.0 --json isDraft --jq .isDraft > /tmp/adg-release-draft; then
+            test "$(cat /tmp/adg-release-draft)" = true || { echo 'Existing published release is protected'; exit 1; }
+          else
+            gh release create v1.0.0 --draft --target "$GITHUB_SHA" --title 'ARUNIKA DUNGEON v1.0.0 — GUARDIAN AWAKENING' --notes-file docs/RELEASE-NOTES.md
+          fi
+          gh release upload v1.0.0 dist/ArunikaDungeon-1.0.0.jar dist/ArunikaDungeon-1.0.0-source.zip dist/SHA256SUMS.txt dist/ArunikaDungeon-1.0.0-docs.zip --clobber
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: Guardian-Awakening-build-diagnostics
+          path: build-logs/
+          if-no-files-found: warn

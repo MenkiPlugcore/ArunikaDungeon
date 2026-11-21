@@ -1,0 +1,12 @@
+PASS callback count 1 (reward=true, fail=false)
+PASS session closes despite provider status
+PASS eliminated player excluded from progression
+PASS callback count 0 (reward=false, fail=false)
+PASS session closes despite provider status
+PASS callback count 1 (reward=true, fail=true)
+PASS session closes despite provider status
+PASS eliminated player excluded from progression
+PASS failed run does not dispatch progression
+PASS stable idempotency key
+PASS disabled policy is inactive
+TOTAL 11 PASS

@@ -1,0 +1,7 @@
+schema-version: 2
+# Admin-only staging; configure actual regions in a separate test world.
+enabled: false
+scaling:
+  minion-per-extra-player: 0.15
+  max-multiplier: 3.0
+arenas: []

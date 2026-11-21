@@ -1,0 +1,17 @@
+# ArunikaDungeon v0.3.0: public entry disabled; admin preview opt-in.
+schema-version: 2
+foundation-only: true
+battle-preview: false
+battle-tick-interval: 5
+scheduler:
+  interval-ticks: 20
+sessions:
+  max-private-players: 5
+  max-private-active: 3
+  shared-cooldown-seconds: 1800
+  reservation-timeout-seconds: 60
+config-management:
+  auto-generate: true
+  migrate-on-start: true
+  backup-retention: 5
+  validation-strict: true

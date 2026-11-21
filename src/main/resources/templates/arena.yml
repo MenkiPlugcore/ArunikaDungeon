@@ -1,0 +1,10 @@
+schema-version: 1
+# Coordinates are intentionally unset, not copied from corridor dungeons.
+shared:
+  world: ""
+  spawn: ""
+  exit: ""
+private:
+  world: ""
+  pool: []
+  exit: ""

@@ -1,0 +1,75 @@
+v0.8.0 — Waystone Gateway & Crossplay
+- Added read-only CdrWaystone ABI adapter, native inventory gateway, live roster and party flow.
+- Added exact teleport permit, configured arena protection, exit recovery, validated hub/return bindings.
+- Added migration and policy tests; preserve original Waystone binaries and legacy data.
+- Preview only; no production runtime certification.
+
+0.1.0 development preview
++ Pure Java session core, read-only gateway API and catalog
++ Paper adapter source and isolated database schema initializer
++ Offline legacy snapshot and verified source preservation
++ 22 passing Java core checks and migration verification against supplied archive
+- No production JAR: real Paper compile/runtime target unavailable
+- No gameplay, legacy command takeover, exchange cutover or Waystone binary change
+
+v0.2.0 — Smart Configuration & Automatic Migration (development preview)
+- Added modular folder discovery and generation, schema 2 smart merge, admin create/reload.
+- Added independent Shared/Private wave and boss drop templates, structural/range validation.
+- Added filesystem transaction journal, atomic saves, rollback, original backups, retention.
+- Added additive isolated SQLite schema 2 migration and pre-migration DB backup source.
+- Preserved old core/API and offline legacy staging. Entry hard-disabled; legacy ownership unchanged.
+- Executed 22 core + 33 fixture configuration tests; offline staging reverified. Paper, real YAML and JDBC runtime pending; no distributable plugin JAR.
+
+v0.3.0 — Arena, Wave & Boss Engine (development source preview)
+- Immutable arena configuration and cross-floor overlap validation; additive config defaults preserve prior schema 2.
+- Core battle state machine, scoped entity ownership, timeout/elimination/abort handling, bounded spawn pacing, minion scaling, and in-memory cooldown retention on reload.
+- Optional admin-only Paper adapter, MythicMobs API bridge, bossbar/actionbar, basic region/damage filtering, direct entity/projectile cleanup.
+- 22 core + 38 fixture config + 24 battle assertions; legacy SQLite staging retested separately. Runtime dependency build not available; no installable JAR.
+
+v0.4.0 — Shared Dungeon System
+- Added per-floor SharedQueue with no hard participant cap, UUID queue locks, independent countdown and late-join queue.
+- Added atomic timestamp CooldownStore; restore on startup, fail closed on write/read errors.
+- Added Shared staging commands, permission and read-only status API; automatic staging teleport with rollback/retry.
+- Added config flag shared-preview (default false), honoring per-floor Shared activation and countdown.
+- Production gateway/loot remain disabled; existing foundation and arena preview retained.
+
+v0.5.0 — Private Dungeon & Universal Ticket (development preview)
+- Added PrivateParties with centralized invitation, readiness, per-floor FIFO queue, and common UUID locking.
+- Added TicketLedger: unique serial/generation, durable hold, commit, terminal consumption, generation-based refund and owner claim. Interrupted holds recovered on startup; unresolved committed sessions require staff review.
+- Added opt-in Paper staging adapter, ticket commands and finish settlement callback; no Vault; public gateway remains disabled. Real Paper adapter not compiled/tested here.
+- Additive private-preview setting and per-floor limits; compatible read-only status API.
+- 22 core + 49 fixture config + 24 battle + 32 Shared + 41 Private checks passed; legacy staging importer reverified. No distributable Minecraft plugin JAR.
+
+v0.6.0 — Physical Loot & Loot Frenzy (development source preview)
+- Added immutable per-dungeon/per-mode loot tables, percentage rolls and inclusive random amounts.
+- Battle LOOT phase reserves arena and participants through collection; Shared cooldown starts on boss death. Duplicate death ignored; admin direct preview remains rewardless.
+- Paper physical drop adapter, scoped pickup, scatter, entity caps and indexed cleanup; vanilla, serialized, legacy token and unique ticket item support; optional reflective providers.
+- Command-based held-item editor with atomic config save/backup, safe reload. GUI deferred.
+- No refund after loot exposure or victory, preventing normal refund+loot abuse. Hard-crash reconciliation remains staff-reviewed.
+- 201 standalone assertions passed; legacy source snapshot and row counts verified. No plugin JAR yet; provider and Paper runtime tests pending.
+
+v0.7.0 Unified Dungeon Exchange
+- One-time legacy Exchange migration on absent legacy plugin; preserves config/rewards/DB incl WAL.
+- Native catalog GUI with category/pagination/confirmation; legacy command routing guarded.
+- Configurable universal ticket reward, transaction UUID serialized issue/claim.
+- Worker-owned SQLite ledger, atomic stock and purchase reservation, pending manual recovery.
+- Temporary permission adapter, explicit allowlist, no arbitrary command rewards.
+- Admin command editing and backup. No production cutover yet.
+
+v0.9.0 — Nusa Karsa Integration & Administration (development preview)
+- Native 54-slot admin GUI, arena point wizard, wave/boss command-assisted editors, physical drop creation GUI, Exchange item/cost/toggle GUI and session stop confirmation.
+- Atomic typed configuration edits, validation before commit, backups and migration defaults. Cross-lock configuration and Exchange transactions.
+- Audited Nusa 1.2.10 actual class XP command; opt-in bounded native dispatch during loot phase, custom progression provider contract, direct damage contribution, duplicate boss callback prevention. Native Awakening remains unchanged; no invented Race XP API.
+- Early/late cross-session damage checks. Previous modules retained. No verified Paper JAR or runtime certification.
+
+0.9.5 — targeted static audit / security / performance
+- Durable ticket EXPOSED marker, pending claim ownership, anti-refund after loot.
+- Arena/query allocation reduction, cooldown preservation, projectile and flight guards, GUI debounce.
+- Unified loaded token, SQLite cancel guard and worker shutdown, bounded RPG dispatch.
+- 279 Java checks and 16 SQL checks PASS offline; original data preserved. No official compile or runtime certification.
+
+1.0.0-RC1 — staging hardening, legacy spawner guard, dependency validation, indexed lookup, Exchange tester permission, startup cleanup, install guide. Build blocked; no production release.
+
+1.0.0-RC2 — Build gate only: official dependencies required; verify all standalone suites, class headers/resources/CRC/direct dependency presence, checksums and CI diagnostic artifacts. Gameplay unchanged. Official compilation blocked, no JAR.
+
+RC3 — Startup/shutdown failure isolation; new local Paper smoke harness; official build still blocked. No gameplay changes.
