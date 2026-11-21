@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """RC4 Waystone-only changes. Run after rc3-yaml-fix.py on exact RC3 archive."""
 from pathlib import Path
-import sys
+import sys,re
 root=Path(sys.argv[1])
 base=root/"src/main/java/site/cadera/arunika/dungeon"
 def edit(p,old,new):
@@ -34,5 +34,5 @@ test=root/"src/test/java/site/cadera/arunika/dungeon/battle/GatewayTest.java"
 edit(test,'System.out.println("TOTAL "+n+" PASS");','check(near(p(0),p(6),6),"hub radius boundary accepted");check(!near(p(0),p(6.1),6),"hub radius enforced");check(!near(p(0),new Point("other",0,65,0),6),"hub world must match");check(!near(null,p(0),6),"missing anchor denied");check(!near(p(0),p(0),Double.NaN),"invalid radius denied");check(!near(p(0),p(0),-1),"negative radius denied");System.out.println("TOTAL "+n+" PASS");')
 # Version labels in build, metadata, code, and smoke utility.
 for q in [root/"pom.xml",root/"src/main/resources/plugin.yml",p,root/"tools/build-verified.sh",root/"tools/build-verified.ps1",root/"tools/VerifyArtifact.java",root/"tools/smoke-paper.py",root/".github/workflows/build.yml"]:
-    s=q.read_text();q.write_text(s.replace("RC3","RC4"))
+    s=q.read_text();q.write_text(re.sub(r"(?<![A-Za-z])RC3(?![0-9])","RC4",s))
 print("Applied RC4 Waystone adapter changes; survival JARs untouched.")
