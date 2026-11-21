@@ -1,0 +1,65 @@
+name: Phase10 Original Waystone Model - Dungeon-only
+on:
+  workflow_dispatch:
+  push:
+    branches: [phase10-original-waystone-model]
+    paths:
+      - 'phase10/**'
+      - '.github/workflows/phase10-waystone-model.yml'
+permissions:
+  contents: read
+jobs:
+  model-core-build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Verify and extract existing Phase8 dungeon-only source
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo 'ad8faccd2853bb63e49dbf06fe9b64d07e2be9c7fd50c6708a89a54e709f0a8e  ArunikaDungeonWaystone-dungeon-only-delta.zip' | sha256sum -c -
+          mkdir -p stage
+          unzip -q ArunikaDungeonWaystone-dungeon-only-delta.zip -d stage
+          test -f stage/ArunikaDungeonWaystone-core/pom.xml
+      - name: Integrate existing ItemsAdder skin registry and model bridge
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp phase10/DungeonFurnitureVisuals.java stage/ArunikaDungeonWaystone-core/src/main/java/dev/arunika/dungeonwaystone/
+          cp phase10/skins.yml stage/ArunikaDungeonWaystone-core/src/main/resources/
+          python3 phase10/apply.py stage/ArunikaDungeonWaystone-core
+          grep -q "getNode(Entity entity)" stage/ArunikaDungeonWaystone-core/src/main/java/dev/arunika/dungeonwaystone/DungeonWaystonePlugin.java
+          grep -q 'version: .0.2.0.' stage/ArunikaDungeonWaystone-core/src/main/resources/plugin.yml
+          grep -q 'vephilim_waystones:waystone_blackstone' stage/ArunikaDungeonWaystone-core/src/main/resources/skins.yml
+      - name: Compile with real Paper 1.21.11 API and Java 21
+        working-directory: stage/ArunikaDungeonWaystone-core
+        run: mvn -B -ntp clean verify -DskipTests
+      - name: Verify JAR and original model metadata
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p verified
+          cp stage/ArunikaDungeonWaystone-core/target/ArunikaDungeonWaystone-0.2.0.jar verified/
+          unzip -t verified/ArunikaDungeonWaystone-0.2.0.jar | tail -1
+          unzip -p verified/ArunikaDungeonWaystone-0.2.0.jar plugin.yml | grep -E '^name:|^version:|^main:'
+          unzip -p verified/ArunikaDungeonWaystone-0.2.0.jar skins.yml | grep 'vephilim_waystones:waystone_portstone'
+          javap -verbose -classpath verified/ArunikaDungeonWaystone-0.2.0.jar dev.arunika.dungeonwaystone.DungeonFurnitureVisuals | grep 'major version: 65'
+          (cd verified && sha256sum *.jar > SHA256SUMS.txt)
+          printf 'STAGING: Paper API compilation and structural verification passed. Client Java/Bedrock and runtime ItemsAdder/Geyser models NOT TESTED.\n' > verified/STATUS.txt
+      - name: Upload verified staging JAR
+        uses: actions/upload-artifact@v4
+        with:
+          name: ArunikaDungeonWaystone-0.2.0-Original-Models-STAGING
+          path: verified/
+          if-no-files-found: error
+      - name: Upload full integrated source
+        uses: actions/upload-artifact@v4
+        with:
+          name: ArunikaDungeonWaystone-0.2.0-Source
+          path: stage/ArunikaDungeonWaystone-core/
+          if-no-files-found: error
