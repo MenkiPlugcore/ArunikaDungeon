@@ -1,0 +1,16 @@
+PASS legacy reward identity, revision, stock and limit retained
+PASS legacy token bytes retained
+PASS one universal ticket reward
+PASS item and ticket enabled
+PASS invalid zero cost
+PASS duplicate reward ID refused
+PASS permission reward disabled by default
+PASS permission allowlist enforced
+PASS explicit permission prefix accepted
+PASS command rewards remain locked
+PASS ticket serial equals transaction id; claim persisted
+PASS interrupted ticket issue idempotent
+PASS different claimant rejected
+PASS claimed ticket cannot be reissued
+PASS held ticket cannot be reissued
+TOTAL 15 PASS (no JDBC runtime)

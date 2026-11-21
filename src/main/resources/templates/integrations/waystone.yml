@@ -1,0 +1,8 @@
+schema-version: 2
+# Opt-in staging. No changes to CdrWaystone's own files.
+enabled: false
+gateway-id: ''
+hub: {world: '', x: 0, y: 0, z: 0}
+interaction-radius: 6
+# Registered official Waystone UUID: floor-id/arena-id
+return-waystones: {}

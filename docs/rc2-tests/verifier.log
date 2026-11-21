@@ -1,0 +1,4 @@
+PASS rejected: No plugin classes
+PASS rejected: Unexpected bundled class
+PASS rejected: Missing compiled source class
+PASS rejected: missing dependencies

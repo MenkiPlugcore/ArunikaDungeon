@@ -1,0 +1,152 @@
+{
+  "baseline_commit": "35f397807cc4f848f589673a9bf1cca33f4cfa37",
+  "workflow_run": 44885102867,
+  "source_artifact": 14699682075,
+  "downloaded_source_sha256": "7ff5b0564ce86a4cbb4b4eb081dd938f1fb303642992a142abc2f8b185af2950",
+  "baseline_production_files": [
+    {
+      "path": "src/main/java/site/cadera/arunika/dungeon/battle/ArenaAccessPolicy.java",
+      "sha256": "746b3abbe53432cb16228fde1d0687760ad6918cafaec39870e3e2d951380581"
+    },
+    {
+      "path": "src/main/java/site/cadera/arunika/dungeon/battle/BattleEngine.java",
+      "sha256": "fee8e87456b30195ceeba7cede14857a10d7356e746734ee733a47a7504be18b"
+    },
+    {
+      "path": "src/main/java/site/cadera/arunika/dungeon/battle/BattlePlan.java",
+      "sha256": "757869e32308c5be0c7cdef046f8da5825790a694c0cae1c0682591c4493ff2d"
+    },
+    {
+      "path": "src/main/java/site/cadera/arunika/dungeon/battle/LootPlan.java",
+      "sha256": "697809d30632a746a3eb3294e10dcc0d873ed520ef53abd0de1fb03b2a18e33f"
+    },
+    {
+      "path": "src/main/java/site/cadera/arunika/dungeon/config/ConfigTransaction.java",
+      "sha256": "dc014599caaa089c9402f53f9b91f75c046f0be0ccc7f0e0a3a2f1c16020e487"
+    },
+    {
+      "path": "src/main/java/site/cadera/arunika/dungeon/config/SmartConfiguration.java",
+      "sha256": "f438725c0fc796c157db571c4072efbf76302658d5409191efaa7bf7dc1119d4"
+    },
+    {
+      "path": "src/main/java/site/cadera/arunika/dungeon/config/SnakeYamlCodec.java",
+      "sha256": "1214ede469fc9f7d4250748147da40d4b65cbf466c4fdeb628c3625c5051371c"
+    },
+    {
+      "path": "src/main/java/site/cadera/arunika/dungeon/core/ConfigLayoutManager.java",
+      "sha256": "8a6d74044f60884a1efb8c254cd35bff343b1565c965da431e443f84884e4960"
+    },
+    {
+      "path": "src/main/java/site/cadera/arunika/dungeon/core/DungeonCatalog.java",
+      "sha256": "7ca06196950d92729339fc44fdc3d346a866a13a426c13f7c8ac5ed4c6253330"
+    },
+    {
+      "path": "src/main/java/site/cadera/arunika/dungeon/core/DungeonGatewayApi.java",
+      "sha256": "f2d29e42850b16e0caa05835954df0243bd4139cc48125ea1a0a3b4524f5b467"
+    },
+    {
+      "path": "src/main/java/site/cadera/arunika/dungeon/core/DungeonRpgApi.java",
+      "sha256": "b67fa1e26c35447b578c01b60f6ab93aa08d22f2560522010aa4842d53196cbe"
+    },
+    {
+      "path": "src/main/java/site/cadera/arunika/dungeon/core/FoundationDatabase.java",
+      "sha256": "9d9458660aaad70ed8a7f7a9370cf5236a302deb9af92ced7fa982a0e3714938"
+    },
+    {
+      "path": "src/main/java/site/cadera/arunika/dungeon/core/LegacyInventory.java",
+      "sha256": "156e2d863da51c0ff84fdf7137fc448a0eb91f915c1c752dc4c4143b713b1ff5"
+    },
+    {
+      "path": "src/main/java/site/cadera/arunika/dungeon/core/PerformanceGuard.java",
+      "sha256": "a82bff2459db6bb1ec8025892fa17de31926ceb595c6f33d5247f062e2d41748"
+    },
+    {
+      "path": "src/main/java/site/cadera/arunika/dungeon/core/RpgPolicy.java",
+      "sha256": "3f2f1a597946cc34d44de53ee7d24db5351f9b29309990acc6f47945be17aaf9"
+    },
+    {
+      "path": "src/main/java/site/cadera/arunika/dungeon/core/SessionRegistry.java",
+      "sha256": "b0fae3d30886762c2faff11fb0add5a7cea60b5a2fe633b63e2ed56532518466"
+    },
+    {
+      "path": "src/main/java/site/cadera/arunika/dungeon/core/ShutdownSteps.java",
+      "sha256": "5e42cd4a595af05798d0c4a397ae1253492148529b6b262d567b27983e702e13"
+    },
+    {
+      "path": "src/main/java/site/cadera/arunika/dungeon/core/StagingPolicy.java",
+      "sha256": "d3dfcfaab57ab8e1f79beb955ebe2e92aa815d85f385967aa33ea4ce770219cd"
+    },
+    {
+      "path": "src/main/java/site/cadera/arunika/dungeon/core/YamlDefaultsMerge.java",
+      "sha256": "1deb095a8bb08b1ce6df0c35e7ecfe4fd0ae9acbf880b8ca5bee358aaac5aa13"
+    },
+    {
+      "path": "src/main/java/site/cadera/arunika/dungeon/exchange/ExchangeCatalog.java",
+      "sha256": "f76a0f28397242c71fdc8259565b37f9006e43a49b4c7d43303693234556fbac"
+    },
+    {
+      "path": "src/main/java/site/cadera/arunika/dungeon/exchange/ExchangeLedger.java",
+      "sha256": "76a53aa5b15381c8cd6e41cf5a16ed1b6111f97ffe42c85e5a0d8362154aa7d1"
+    },
+    {
+      "path": "src/main/java/site/cadera/arunika/dungeon/exchange/ExchangeMigration.java",
+      "sha256": "786282bfb5cfbff4be5f2a2300a8f2194dd75f5d068773fdeb381bab07da9985"
+    },
+    {
+      "path": "src/main/java/site/cadera/arunika/dungeon/paper/ArunikaDungeonPlugin.java",
+      "sha256": "311cefb76bd047c8cf35035243cf3397e85405076e1185b3f490d074464c5f44"
+    },
+    {
+      "path": "src/main/java/site/cadera/arunika/dungeon/paper/ExchangePermission.java",
+      "sha256": "444befde5b346f7357080b03289282bac18287a4e70d100c0c5d0123c19880af"
+    },
+    {
+      "path": "src/main/java/site/cadera/arunika/dungeon/paper/MythicBridge.java",
+      "sha256": "2f6a27cc7c1d7e3b931f481515d2001f222dfe14f34a1ae528c1b2b5e4e65699"
+    },
+    {
+      "path": "src/main/java/site/cadera/arunika/dungeon/paper/PaperAdmin.java",
+      "sha256": "928f4c2b7918567caad168b524be4c14a4a1ba02506e390efc05a4295b18d4b8"
+    },
+    {
+      "path": "src/main/java/site/cadera/arunika/dungeon/paper/PaperBattlePort.java",
+      "sha256": "18364abaa09fc8498e054de3e23d4dbe9302f7c2e4a94cd28cc0fa1e02d80a1f"
+    },
+    {
+      "path": "src/main/java/site/cadera/arunika/dungeon/paper/PaperExchange.java",
+      "sha256": "e76a44d0b59286058a2c2a6a903ede9640093f2f9933b8aece0337b0943a2d50"
+    },
+    {
+      "path": "src/main/java/site/cadera/arunika/dungeon/paper/PaperGateway.java",
+      "sha256": "14eeb3d339b6768032cccc6ae1efa076d49f53a7b66a6cf909814c3ac41fe5e2"
+    },
+    {
+      "path": "src/main/java/site/cadera/arunika/dungeon/paper/PaperLoot.java",
+      "sha256": "2a737d12c9b78531a5cd2b9698feac2eeed485a63cbe8fadcd34a0203960f67b"
+    },
+    {
+      "path": "src/main/java/site/cadera/arunika/dungeon/paper/PaperTickets.java",
+      "sha256": "4bc75817a6148c6daa33f9d4876f3682d86ab985dffc64e2a1671657fd41fbc8"
+    },
+    {
+      "path": "src/main/java/site/cadera/arunika/dungeon/paper/WaystoneBridge.java",
+      "sha256": "7dc12d18befd98024f3a958f73fef6b1c5d96f0535eace145e8d340c859a5324"
+    },
+    {
+      "path": "src/main/java/site/cadera/arunika/dungeon/privategame/PrivateParties.java",
+      "sha256": "f4b07f47620f283a10bd4a719c7b2a876eba21011f7588bf22abf575d2bbdc03"
+    },
+    {
+      "path": "src/main/java/site/cadera/arunika/dungeon/privategame/TicketLedger.java",
+      "sha256": "bd6017f9437d6b0435aafe1808b0e31dbc4480c7cf8cb24e462c3d423868f91f"
+    },
+    {
+      "path": "src/main/java/site/cadera/arunika/dungeon/shared/CooldownStore.java",
+      "sha256": "14cb93d17c3865c3b5a43fdac259c0ae3a1e9d6e02bacdc8abb192eb50193da4"
+    },
+    {
+      "path": "src/main/java/site/cadera/arunika/dungeon/shared/SharedQueue.java",
+      "sha256": "1d226e5c5699660d31f3ddaf7ad6f21c9061071f89d8dda8a66077e4cda7170e"
+    }
+  ]
+}

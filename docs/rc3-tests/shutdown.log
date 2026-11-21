@@ -1,0 +1,1 @@
+PASS shutdown: 3 checks (continue, report, do not swallow fatal Error)

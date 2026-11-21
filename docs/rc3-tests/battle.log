@@ -1,0 +1,31 @@
+PASS non-overlapping arena layouts accepted
+PASS overlapping arena rejected
+PASS out-of-region spawn refused
+PASS member permitted only in own arena
+PASS living participant cannot escape or jump arenas
+PASS outsiders denied active and configured empty arena
+PASS survival movement outside arena allowed
+PASS preparation delay
+PASS performance guard pauses spawn
+PASS global tracked-entity budget blocks excess
+PASS cached pending count after two spawns
+PASS duplicate death ignored and pending minion replenished
+PASS wave two only after pending and live mobs cleared
+PASS boss spawns only after last wave
+PASS no cooldown before boss kill
+PASS boss death completes exactly once
+PASS shared cooldown isolated by floor
+PASS participant and entity index cleaned
+PASS cooldown survives registry replacement
+PASS despawn aborts rather than pretending death
+PASS spawn failure cleans reservation
+PASS eliminated player can exit but cannot reenter
+PASS all eliminated abort and cleanup
+PASS timeout cleanup
+PASS simultaneous modes share global budget fairly
+PASS entity ownership indexed
+PASS abort affects only matching session
+PASS shutdown cleans all sessions
+PASS participant spawn scaling bounded
+PASS 101 participants accepted by pure engine
+TOTAL 30 PASS

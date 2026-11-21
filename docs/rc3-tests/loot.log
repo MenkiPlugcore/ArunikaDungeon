@@ -1,0 +1,23 @@
+PASS 0% never drops; 100% always drops
+PASS random amount includes both endpoints
+PASS 50% chance statistical sanity
+PASS wave trigger isolation
+PASS boss table independent of wave
+PASS pickup delay must fit collection window
+PASS each wave-clear callback once
+PASS one mob-kill callback per tracked death
+PASS duplicate boss death cannot repeat reward
+PASS session remains reserved during collection
+PASS Shared cooldown starts before collection ends
+PASS only living registered participants eligible
+PASS arena reserved before final second
+PASS collection timeout releases arena and participants
+PASS duplicate minion death cannot repeat reward
+PASS refund blocked after loot exposure
+PASS admin preview bypass cannot generate loot
+PASS shutdown after boss kill cannot refund successful run
+PASS all players leave during loot finalizes victory
+PASS physical ticket has distinct valid serial and no claimant
+PASS different physical drops have unique serials
+PASS duplicate ticket cannot redeem after restart
+TOTAL 22 PASS

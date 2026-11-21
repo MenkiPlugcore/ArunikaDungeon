@@ -1,0 +1,7 @@
+schema-version: 2
+# All bonus progression is opt-in. Nusa Karsa 1.2.10 exposes Class XP, not a separate Race XP.
+enabled: false
+class-exp-per-boss: 0
+native-class-xp: false
+# Custom service only; native Awakening already tracks eligible Monster kills.
+awakening-progress: false

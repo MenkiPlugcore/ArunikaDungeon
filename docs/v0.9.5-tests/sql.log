@@ -1,0 +1,16 @@
+PASS archive rows preserved in disposable SQLite
+PASS reserve finite stock
+PASS pending transaction index query detects lock
+PASS cannot oversell last stock
+PASS cancel transition
+PASS cancel restores stock
+PASS stock restoration cannot exceed configured cap
+PASS missing purchase cannot be decremented
+PASS unlimited stock recognized without increment
+PASS cancel clears pending lock
+PASS double cancel rejected by state condition
+PASS debit transition
+PASS cannot cancel after debit
+PASS delivery transition
+PASS double delivery rejected by state condition
+PASS SQLite integrity after transactions

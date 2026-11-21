@@ -1,14 +1,19 @@
-# ArunikaDungeon — Guardian Awakening RC3
+# ArunikaDungeon 1.0.0 — Guardian Awakening
 
-Release candidate; not production-ready. This repository is initially a build bootstrap, not the source distribution.
+Verified staging candidate. **Production gate remains open** pending real clients, providers and load acceptance. See [release notes](docs/RELEASE-NOTES.md) and [known issues](docs/KNOWN-ISSUES.md).
 
-## Build RC3
+## Build
 
-1. Upload the exact `ArunikaDungeon-v1.0.0-RC3-source.zip` archive from the chat to the repository root on `main` (do not rename or extract it).
-2. Expected SHA-256: `d3fd3eacfa681c74b7ce8d959b0ace8ffc6bc7a50d9f10eb931abb719061cbdb`.
-3. Open [Actions](https://github.com/MenkiPlugcore/ArunikaDungeon/actions). The archive build workflow runs on upload, or can be started manually once the archive exists.
-4. Download the verified staging artifact only if every build step succeeds. If it fails, inspect the diagnostics and compiler output.
+Java 21 and Maven are required. `bash tools/build-verified.sh` compiles directly from canonical src/, executes real-dependency regression suites and verifies archive/manifest/dependency hashes before producing `target/verified/ArunikaDungeon-1.0.0.jar`. `python3 tools/package-release.py` packages source, documentation, log and checksums. A bare Maven test invocation is not the entire main-method test gate.
 
-This repository is public. Change it to private before uploading if the source should not be public. Never upload production databases, player data, credentials, or third-party plugin JARs.
+## Setup
 
-Target: Java 21, Paper 1.21.11. A successful build is not proof of runtime compatibility. Do not replace production dungeon plugins before staging tests pass.
+Start with [installation](docs/INSTALLATION-GUIDE.md), [migration](docs/MIGRATION-GUIDE.md), [dungeon setup](docs/DUNGEON-SETUP-GUIDE.md), [Waystone setup](docs/WAYSTONE-SETUP-GUIDE.md), [Exchange setup](docs/EXCHANGE-SETUP-GUIDE.md), [commands](docs/ADMIN-COMMANDS.md) and [rollback](docs/ROLLBACK-GUIDE.md).
+
+Shared/Private behavior and separate Waystone JARs are preserved. Defaults stay locked until an admin configures valid arenas, mobs, currency/rewards and explicit preview switches. No server data is bundled.
+
+## Provenance and release
+
+Source comes from the successful RC6 workflow 44885102867 at 35f397807cc4f848f589673a9bf1cca33f4cfa37. [Provenance](docs/SOURCE-PROVENANCE.json), [audit](docs/FULL-AUDIT-REPORT.md), [regression](docs/REGRESSION-TEST-REPORT.md), [performance](docs/PERFORMANCE-REPORT.md), [dependency evidence](docs/DEPENDENCY-COMPATIBILITY.md) and [runtime checklist](docs/RUNTIME-ACCEPTANCE-CHECKLIST.md) distinguish tested and untested scope.
+
+Historical RC3 archive, patch chain and workflows remain available for reproducibility; the Guardian Awakening workflow builds canonical root source and prepares a draft release only. Never infer production readiness from the version number or successful compilation.

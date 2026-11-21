@@ -1,0 +1,18 @@
+PASS survival outside arenas unaffected
+PASS idle arena entry denied
+PASS nonparticipant denied active arena
+PASS living member can move within own arena
+PASS cross arena entry denied
+PASS unauthorized exit denied
+PASS eliminated participant may leave
+PASS eliminated participant may not reenter
+PASS exact destination permit
+PASS redirected destination permit denied
+PASS missing permit denied
+PASS cross-world permit denied
+PASS return from own arena
+PASS wrong arena return denied
+PASS return stone outside arena denied
+PASS player outside arena denied
+PASS eliminated player cannot return through active battle gate
+TOTAL 17 PASS

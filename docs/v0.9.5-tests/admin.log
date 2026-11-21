@@ -1,0 +1,25 @@
+PASS RPG off by default
+PASS boss edit applied to snapshot
+PASS boss original backed up
+PASS wave count updated
+PASS wave append retained two mob groups
+PASS arena wizard shape accepted
+PASS overlap rejected without writing
+PASS invalid enabled edit creates no templates
+PASS second isolated mode saved
+PASS disabled dungeon expands safely
+PASS optional progression validated
+PASS negative EXP refused
+TOTAL 12 PASS
+PASS callback count 1 (reward=true, fail=false)
+PASS session closes despite provider status
+PASS eliminated player excluded from progression
+PASS callback count 0 (reward=false, fail=false)
+PASS session closes despite provider status
+PASS callback count 1 (reward=true, fail=true)
+PASS session closes despite provider status
+PASS eliminated player excluded from progression
+PASS failed run does not dispatch progression
+PASS stable idempotency key
+PASS disabled policy is inactive
+TOTAL 11 PASS

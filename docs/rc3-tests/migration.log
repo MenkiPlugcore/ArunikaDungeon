@@ -1,0 +1,10 @@
+{
+  "result": "staged",
+  "sqlite_rows": {
+    "transactions": 113,
+    "purchases": 109,
+    "reward_stock": 32
+  },
+  "files_preserved": 22,
+  "output": "/tmp/tmp.9CWr6DdHy3"
+}

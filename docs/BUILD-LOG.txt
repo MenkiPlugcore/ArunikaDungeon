@@ -1,0 +1,440 @@
+openjdk version "21.0.13.1" 2026-11-17 LTS
+OpenJDK Runtime Environment Temurin-21.0.13.1+2 (build 21.0.13.1+2-LTS)
+OpenJDK 64-Bit Server VM Temurin-21.0.13.1+2 (build 21.0.13.1+2-LTS, mixed mode, sharing)
+Apache Maven 3.9.9 (8e8579a9e76f7d015ee5ec7bfcdc97d260186937)
+Maven home: /workspace/scratch/6a238aa73a41/buildtools/apache-maven-3.9.9
+Java version: 21.0.13.1, vendor: Eclipse Adoptium, runtime: /tmp/arunika-jdk21
+Default locale: en, platform encoding: UTF-8
+OS name: "linux", version: "6.18.57", arch: "amd64", family: "unix"
+[INFO] Scanning for projects...
+[INFO]
+[INFO] -----------------< site.cadera.arunika:ArunikaDungeon >-----------------
+[INFO] Building ArunikaDungeon 1.0.0
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO]
+[INFO] --- clean:3.2.0:clean (default-clean) @ ArunikaDungeon ---
+[INFO] Deleting /workspace/scratch/a5183a497fb9/ArunikaDungeon/target
+[INFO]
+[INFO] --- resources:3.3.1:resources (default-resources) @ ArunikaDungeon ---
+[INFO] Copying 17 resources from src/main/resources to target/classes
+[INFO]
+[INFO] --- compiler:3.13.0:compile (default-compile) @ ArunikaDungeon ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 38 source files with javac [debug release 21] to target/classes
+[INFO] Annotation processing is enabled because one or more processors were found
+  on the class path. A future release of javac may disable annotation processing
+  unless at least one processor is specified by name (-processor), or a search
+  path is specified (--processor-path, --processor-module-path), or annotation
+  processing is enabled explicitly (-proc:only, -proc:full).
+  Use -Xlint:-options to suppress this message.
+  Use -proc:none to disable annotation processing.
+[INFO] /workspace/scratch/a5183a497fb9/ArunikaDungeon/src/main/java/site/cadera/arunika/dungeon/paper/ArunikaDungeonPlugin.java: Some input files use or override a deprecated API.
+[INFO] /workspace/scratch/a5183a497fb9/ArunikaDungeon/src/main/java/site/cadera/arunika/dungeon/paper/ArunikaDungeonPlugin.java: Recompile with -Xlint:deprecation for details.
+[INFO]
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ ArunikaDungeon ---
+[INFO] skip non existing resourceDirectory /workspace/scratch/a5183a497fb9/ArunikaDungeon/src/test/resources
+[INFO]
+[INFO] --- compiler:3.13.0:testCompile (default-testCompile) @ ArunikaDungeon ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 17 source files with javac [debug release 21] to target/test-classes
+[INFO] Annotation processing is enabled because one or more processors were found
+  on the class path. A future release of javac may disable annotation processing
+  unless at least one processor is specified by name (-processor), or a search
+  path is specified (--processor-path, --processor-module-path), or annotation
+  processing is enabled explicitly (-proc:only, -proc:full).
+  Use -Xlint:-options to suppress this message.
+  Use -proc:none to disable annotation processing.
+[INFO]
+[INFO] --- surefire:3.5.2:test (default-test) @ ArunikaDungeon ---
+[INFO] Tests are skipped.
+[INFO]
+[INFO] --- jar:3.4.2:jar (default-jar) @ ArunikaDungeon ---
+[INFO] Building jar: /workspace/scratch/a5183a497fb9/ArunikaDungeon/target/ArunikaDungeon-1.0.0.jar
+[INFO]
+[INFO] --- dependency:3.8.1:build-classpath (default-cli) @ ArunikaDungeon ---
+[INFO] Wrote classpath file '/workspace/scratch/a5183a497fb9/ArunikaDungeon/target/dependencies.txt'.
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  3.841 s
+[INFO] Finished at: 2026-11-21T15:42:04+07:00
+[INFO] ------------------------------------------------------------------------
+PASS shared no participant cap
+PASS session lookup by ID
+PASS unknown session ID absent
+PASS legacy spawner conflict blocks battle
+PASS missing Mythic blocks battle
+PASS isolated staging dependency gate accepts
+PASS cross-mode participant lock
+PASS one shared session per floor
+PASS same floor private and shared independent
+PASS no cooldown before boss death
+PASS cooldown starts on boss death
+PASS duplicate boss transition rejected
+PASS independent floor cooldown
+PASS cooldown blocks next shared
+PASS private boss does not alter shared cooldown
+PASS cooldown expiry
+PASS reservation expiry releases participant
+PASS expired reservation cannot activate
+PASS private party limit
+PASS private session budget
+PASS cleanup clears index
+PASS unknown floor rejected
+PASS leader must belong to party
+PASS concurrent duplicate reservation blocked
+PASS temporarily removed floor cooldown preserved
+PASS re-added floor cannot bypass cooldown
+PASS five proposed floor descriptors
+TOTAL 27 PASS
+PASS non-overlapping arena layouts accepted
+PASS overlapping arena rejected
+PASS out-of-region spawn refused
+PASS member permitted only in own arena
+PASS living participant cannot escape or jump arenas
+PASS outsiders denied active and configured empty arena
+PASS survival movement outside arena allowed
+PASS preparation delay
+PASS performance guard pauses spawn
+PASS global tracked-entity budget blocks excess
+PASS cached pending count after two spawns
+PASS duplicate death ignored and pending minion replenished
+PASS wave two only after pending and live mobs cleared
+PASS boss spawns only after last wave
+PASS no cooldown before boss kill
+PASS boss death completes exactly once
+PASS shared cooldown isolated by floor
+PASS participant and entity index cleaned
+PASS cooldown survives registry replacement
+PASS despawn aborts rather than pretending death
+PASS spawn failure cleans reservation
+PASS eliminated player can exit but cannot reenter
+PASS all eliminated abort and cleanup
+PASS timeout cleanup
+PASS simultaneous modes share global budget fairly
+PASS entity ownership indexed
+PASS abort affects only matching session
+PASS shutdown cleans all sessions
+PASS participant spawn scaling bounded
+PASS 101 participants accepted by pure engine
+TOTAL 30 PASS
+PASS survival outside arenas unaffected
+PASS idle arena entry denied
+PASS nonparticipant denied active arena
+PASS living member can move within own arena
+PASS cross arena entry denied
+PASS unauthorized exit denied
+PASS eliminated participant may leave
+PASS eliminated participant may not reenter
+PASS exact destination permit
+PASS redirected destination permit denied
+PASS missing permit denied
+PASS cross-world permit denied
+PASS return from own arena
+PASS wrong arena return denied
+PASS return stone outside arena denied
+PASS player outside arena denied
+PASS eliminated player cannot return through active battle gate
+PASS hub radius boundary accepted
+PASS hub radius enforced
+PASS hub world must match
+PASS missing anchor denied
+PASS invalid radius denied
+PASS negative radius denied
+TOTAL 23 PASS
+PASS 0% never drops; 100% always drops
+PASS random amount includes both endpoints
+PASS 50% chance statistical sanity
+PASS wave trigger isolation
+PASS boss table independent of wave
+PASS pickup delay must fit collection window
+PASS each wave-clear callback once
+PASS one mob-kill callback per tracked death
+PASS duplicate boss death cannot repeat reward
+PASS session remains reserved during collection
+PASS Shared cooldown starts before collection ends
+PASS only living registered participants eligible
+PASS arena reserved before final second
+PASS collection timeout releases arena and participants
+PASS duplicate minion death cannot repeat reward
+PASS refund blocked after loot exposure
+PASS admin preview bypass cannot generate loot
+PASS shutdown after boss kill cannot refund successful run
+PASS all players leave during loot finalizes victory
+PASS physical ticket has distinct valid serial and no claimant
+PASS different physical drops have unique serials
+PASS duplicate ticket cannot redeem after restart
+TOTAL 22 PASS
+PASS cannot queue two floors
+PASS queue locks private reservation
+PASS independent 30-second countdown
+PASS per-floor countdown overrides
+PASS warden starts independently
+PASS active participant cannot queue
+PASS 152 simultaneous participants; no dungeon cap
+PASS queue consumed atomically
+PASS queue -> active tracking
+PASS living participant snapshot
+PASS late join waits next run
+PASS new store empty
+PASS live status shows loot and running cooldown
+PASS queue blocked while loot phase holds arena
+PASS 30 minutes from actual boss kill
+PASS other floor unaffected
+PASS duplicate kill rejected
+PASS queued during cooldown
+PASS cooldown prevents start
+PASS private kill doesn't reset shared cooldown
+PASS restart retains remaining cooldown
+PASS expired persisted cooldown ignored
+PASS no countdown while performance guard blocks
+PASS countdown starts after cooldown and guard
+PASS failed start restores queue and unlocks session
+PASS retry backoff
+PASS retry starts once
+PASS disconnect removes queue registration
+PASS explicit queue leave unlocks UUID
+PASS shutdown clears transient queues
+PASS persistence failure surfaced
+PASS disk failure locks Shared
+PASS fail closed after disk error
+PASS corrupt store rejected
+Shared tests passed: 34
+PASS party blocks Shared queue
+PASS party blocks unrelated reservation
+PASS one party per UUID
+PASS invitation expires
+PASS accept invite
+PASS leader only invites
+PASS decline invitation
+PASS membership change clears ready
+PASS five members maximum
+PASS ready check required
+PASS leader only starts
+PASS queued roster immutable
+PASS busy arena queues without charging
+PASS performance guard delays dispatch
+PASS other floor not blocked
+PASS solo ticket spent
+PASS one ticket pays whole party
+PASS active participant indexed
+PASS copied spent ticket rejected
+PASS refund invalidates old copies
+PASS double refund rejected
+PASS only payer may claim refund
+PASS refund claim preserved
+PASS refund survives restart
+PASS delivered claim cannot replay
+PASS session mismatch rejected
+PASS interrupted hold recovered
+PASS interrupted hold refund generation
+PASS recovery idempotent
+PASS spent ticket not automatically refunded on restart
+PASS completed ticket terminal state
+PASS completed encounter cannot be refunded
+PASS unknown serial rejected
+PASS per-floor lower limit respected
+PASS transfer leader
+PASS kick releases UUID
+PASS moved ticket cancels queue without charge
+PASS failed start releases reservation and refunds
+PASS leader disconnect disbands party
+PASS inactive party expires
+PASS shutdown clears parties
+PASS undelivered claim restricted to owner
+PASS stolen pending claim denied
+PASS acknowledged ticket tradeable
+PASS reward exposure survives restart
+PASS refund after loot exposure rejected even after crash
+PASS exposure session mismatch denied
+PASS exposed ticket completes normally
+Private tests passed: 48
+PASS real YAML repeated collection round trip
+PASS real YAML collection aliases still rejected
+PASS five initial folders
+PASS v1 custom settings retained
+PASS schema v1 to v2
+PASS unknown admin keys preserved
+PASS original config byte-identical backup
+PASS independent shared/private drops
+PASS boss drop template
+PASS idempotent restart; no rewrites
+PASS wave extension writes only 4 new drop files and waves.yml
+PASS wave 5 created
+PASS custom drop remains byte-identical
+PASS private loot unaffected
+PASS reduced waves do not delete old loot
+PASS custom floor created
+PASS custom floor retained after restart
+PASS duplicate ID rejected
+PASS duplicate floor rejected
+PASS path traversal rejected
+PASS future schema rejected
+PASS future config not overwritten
+PASS shared cap rejected
+PASS malformed or invalid config rejected
+PASS invalid source not overwritten
+PASS invalid chance rejected
+PASS selective reload refuses other pending migrations
+PASS interrupted transaction restored original
+PASS interrupted transaction removed new file and marker
+PASS unmanaged plan refused before original write
+PASS injected commit failure
+PASS immediate rollback restores originals and clears journal
+PASS v0.2 config receives disabled battle template
+PASS battle migration preserves custom drop bytes
+PASS battle snapshot parses existing wave and boss config
+PASS floor enable cannot activate public preview
+PASS shared default off; configured floor countdown loaded
+PASS custom floor countdown preserved
+PASS disabled Shared mode excluded
+PASS v0.3 config receives disabled shared-preview
+PASS shared-preview requires battle-preview
+PASS explicit dual preview enables staging config
+PASS v0.4 config gains disabled private preview
+PASS private preview needs battle preview
+PASS private mode limit honored
+PASS universal ticket material preserved
+PASS disabled Private mode excluded
+PASS invalid boss location rejected before commit
+PASS v0.5 migration disables loot preview and sets entity budget
+PASS independent configured loot parsed into immutable plans
+PASS editor automatic backup
+PASS editor saved independent table
+PASS editor rejects invalid chance
+PASS bad editor input does not overwrite table
+PASS editor remove persists
+PASS editor traversal rejected
+PASS loot-preview requires battle-preview
+PASS v0.7 gateway config migrated disabled
+PASS gateway migration preserves admin keys
+PASS incomplete enabled gateway refused
+PASS gateway requires battle preview and arena
+PASS valid gateway and exact hub exit loaded
+PASS return Waystone binding preserved
+PASS unknown return arena rejected
+PASS hub cannot also be return stone
+PASS hub inside arena rejected
+PASS arena exit different from hub rejected
+PASS automatic retention max five
+PASS legacy backup not pruned
+PASS symlink configuration refused
+PASS duplicate YAML keys rejected
+PASS unsafe YAML tag rejected
+TOTAL 72 PASS (SnakeYamlCodec)
+SLF4J(W): No SLF4J providers were found.
+SLF4J(W): Defaulting to no-operation (NOP) logger implementation
+SLF4J(W): See https://www.slf4j.org/codes.html#noProviders for further details.
+PASS database schema 2
+PASS existing metadata preserved
+PASS migration ledger preserved
+PASS database integrity
+PASS one automatic database backup; restart idempotent
+PASS future DB schema refused
+TOTAL 6 PASS
+PASS legacy reward identity, revision, stock and limit retained
+PASS legacy token bytes retained
+PASS one universal ticket reward
+PASS item and ticket enabled
+PASS invalid zero cost
+PASS duplicate reward ID refused
+PASS permission reward disabled by default
+PASS permission allowlist enforced
+PASS explicit permission prefix accepted
+PASS command rewards remain locked
+PASS ticket serial equals transaction id; claim persisted
+PASS interrupted ticket issue idempotent
+PASS different claimant rejected
+PASS claimed ticket cannot be reissued
+PASS held ticket cannot be reissued
+SLF4J(W): No SLF4J providers were found.
+SLF4J(W): Defaulting to no-operation (NOP) logger implementation
+SLF4J(W): See https://www.slf4j.org/codes.html#noProviders for further details.
+PASS fresh Exchange created
+PASS fresh initialization idempotent
+PASS fresh pending empty
+PASS fresh DB preserved after transactions
+PASS partial legacy not silently reset
+PASS incomplete live not overwritten
+PASS no invented currency template
+PASS migration creates live snapshot
+PASS migration never overwrites existing data
+PASS pending transaction blocks second purchase
+PASS debited transaction cannot refund
+PASS delivery not repeated
+PASS legacy-compatible player limit
+PASS stock exhausted
+PASS no pending transactions
+TOTAL 30 PASS
+PASS RPG off by default
+PASS boss edit applied to snapshot
+PASS boss original backed up
+PASS wave count updated
+PASS wave append retained two mob groups
+PASS arena wizard shape accepted
+PASS overlap rejected without writing
+PASS invalid enabled edit creates no templates
+PASS second isolated mode saved
+PASS disabled dungeon expands safely
+PASS optional progression validated
+PASS negative EXP refused
+TOTAL 12 PASS
+PASS callback count 1 (reward=true, fail=false)
+PASS session closes despite provider status
+PASS eliminated player excluded from progression
+PASS callback count 0 (reward=false, fail=false)
+PASS session closes despite provider status
+PASS callback count 1 (reward=true, fail=true)
+PASS session closes despite provider status
+PASS eliminated player excluded from progression
+PASS failed run does not dispatch progression
+PASS stable idempotency key
+PASS disabled policy is inactive
+TOTAL 11 PASS
+PASS shutdown: 3 checks (continue, report, do not swallow fatal Error)
+PerformanceGuard: 10 PASS
+SLF4J(W): No SLF4J providers were found.
+SLF4J(W): Defaulting to no-operation (NOP) logger implementation
+SLF4J(W): See https://www.slf4j.org/codes.html#noProviders for further details.
+PASS 50 requests, exactly 10 deliveries
+PASS no pending transactions after successful delivery
+PASS reserved transaction survives reopen
+PASS duplicate retry blocked after reopen
+PASS debited transaction survives reopen
+PASS debited transaction cannot be refunded
+PASS manual resolution clears pending
+PASS SQLite integrity after stress
+PASS missing late preimage cannot partially restore config
+PASS late traversal cannot partially restore config
+PASS duplicate restore/delete target rejected atomically
+PASS valid recovery still restores preimage
+PASS valid recovery clears marker
+TOTAL 5 PASS
+SLF4J(W): No SLF4J providers were found.
+SLF4J(W): Defaulting to no-operation (NOP) logger implementation
+SLF4J(W): See https://www.slf4j.org/codes.html#noProviders for further details.
+PASS zero-cost direct reservation has no transaction
+PASS invalid negative stock rejected
+PASS stock above configured ceiling cannot oversell
+PASS inconsistent unlimited-stock sentinel rejected
+PASS existing Exchange symlink refused without resetting database
+TOTAL 5 PASS
+PASS loot recovery retains session attribution
+PASS unissued amount and exact serialized metadata retained
+PASS recovery explicitly requires manual review
+PASS multiple recovery batches do not overwrite rewards
+PASS no leftover temporary recovery files
+TOTAL 5 PASS
+test_expected_exchange_lock_not_fatal (__main__.SmokeTests.test_expected_exchange_lock_not_fatal) ... ok
+test_fatal (__main__.SmokeTests.test_fatal) ... ok
+test_input_hash_and_manifest (__main__.SmokeTests.test_input_hash_and_manifest) ... ok
+test_input_missing_hash (__main__.SmokeTests.test_input_missing_hash) ... ok
+test_status (__main__.SmokeTests.test_status) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.002s
+
+OK
+PASS plugin archive: 107 Java 21 classes; all source classes present; no bundled external APIs
+Verified staging artifact: target/verified/ArunikaDungeon-1.0.0.jar

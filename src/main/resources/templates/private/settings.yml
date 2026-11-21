@@ -1,0 +1,14 @@
+schema-version: 1
+enabled: false
+entry:
+  type: UNIVERSAL_TICKET
+  ticket-cost-per-party: 1
+party:
+  enabled: true
+  max-members: 5
+  invite-timeout-seconds: 60
+  ready-check: true
+loot:
+  mode: FREE_FOR_ALL
+  pickup-delay-seconds: 3
+  collection-seconds: 45

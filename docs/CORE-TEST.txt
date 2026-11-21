@@ -1,0 +1,21 @@
+PASS shared no participant cap
+PASS cross-mode participant lock
+PASS one shared session per floor
+PASS same floor private and shared independent
+PASS no cooldown before boss death
+PASS cooldown starts on boss death
+PASS duplicate boss transition rejected
+PASS independent floor cooldown
+PASS cooldown blocks next shared
+PASS private boss does not alter shared cooldown
+PASS cooldown expiry
+PASS reservation expiry releases participant
+PASS expired reservation cannot activate
+PASS private party limit
+PASS private session budget
+PASS cleanup clears index
+PASS unknown floor rejected
+PASS leader must belong to party
+PASS concurrent duplicate reservation blocked
+PASS five proposed floor descriptors
+TOTAL 20 PASS

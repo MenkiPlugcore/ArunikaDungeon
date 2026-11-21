@@ -1,0 +1,5 @@
+schema-version: 1
+# Custom physical drops, configured per dungeon, mode, wave and boss.
+# Empty by default; no duplicate loot is emitted by the foundation.
+trigger: "{{TRIGGER}}"
+items: {}

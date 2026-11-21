@@ -1,0 +1,6 @@
+schema-version: 1
+# Ticket is not yet an active gameplay item.
+universal-ticket:
+  enabled: false
+  id: arunika_dungeon_ticket
+  cost-per-private-session: 1

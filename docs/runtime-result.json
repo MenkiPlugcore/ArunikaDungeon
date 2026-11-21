@@ -1,0 +1,27 @@
+{
+  "version": "1.0.0",
+  "paper_sha256": "5ffef465eeeb5f2a3c23a24419d97c51afd7dbb4923ff42df9a3f58bba1ccfba",
+  "plugin_sha256": "18a79b3ab0aa98d6d1fd46dc44ef88020e72505b37c5f75a0b0083767527b5b9",
+  "scope": "isolated foundation only; providers, battle, crossplay and economy not tested",
+  "runs": [
+    {
+      "boot": 1,
+      "startup": "PASS",
+      "database": "PASS",
+      "fresh_exchange": "PASS",
+      "diagnostics": "PASS",
+      "reload": "PASS",
+      "shutdown": "PASS"
+    },
+    {
+      "boot": 2,
+      "startup": "PASS",
+      "database": "PASS",
+      "fresh_exchange": "PASS",
+      "diagnostics": "PASS",
+      "reload": "PASS",
+      "shutdown": "PASS"
+    }
+  ],
+  "status": "PASS"
+}

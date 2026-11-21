@@ -1,0 +1,9 @@
+schema-version: 1
+id: "{{ID}}"
+floor: {{FLOOR}}
+display-name: "{{NAME}}"
+enabled: false
+# Keep disabled until the arena and boss are manually configured.
+shared-enabled: false
+private-enabled: false
+max-duration-seconds: 1200

@@ -1,0 +1,35 @@
+PASS cannot queue two floors
+PASS queue locks private reservation
+PASS independent 30-second countdown
+PASS per-floor countdown overrides
+PASS warden starts independently
+PASS active participant cannot queue
+PASS 152 simultaneous participants; no dungeon cap
+PASS queue consumed atomically
+PASS queue -> active tracking
+PASS living participant snapshot
+PASS late join waits next run
+PASS new store empty
+PASS live status shows loot and running cooldown
+PASS queue blocked while loot phase holds arena
+PASS 30 minutes from actual boss kill
+PASS other floor unaffected
+PASS duplicate kill rejected
+PASS queued during cooldown
+PASS cooldown prevents start
+PASS private kill doesn't reset shared cooldown
+PASS restart retains remaining cooldown
+PASS expired persisted cooldown ignored
+PASS no countdown while performance guard blocks
+PASS countdown starts after cooldown and guard
+PASS failed start restores queue and unlocks session
+PASS retry backoff
+PASS retry starts once
+PASS disconnect removes queue registration
+PASS explicit queue leave unlocks UUID
+PASS shutdown clears transient queues
+PASS persistence failure surfaced
+PASS disk failure locks Shared
+PASS fail closed after disk error
+PASS corrupt store rejected
+Shared tests passed: 34

@@ -1,0 +1,18 @@
+PASS src/main/resources/config.yml
+PASS src/main/resources/plugin.yml
+PASS src/main/resources/templates/ticket.yml
+PASS src/main/resources/templates/boss.yml
+PASS src/main/resources/templates/settings.yml
+PASS src/main/resources/templates/battle.yml
+PASS src/main/resources/templates/performance.yml
+PASS src/main/resources/templates/waves.yml
+PASS src/main/resources/templates/messages.yml
+PASS src/main/resources/templates/config.yml
+PASS src/main/resources/templates/drops.yml
+PASS src/main/resources/templates/arena.yml
+PASS src/main/resources/templates/private/settings.yml
+PASS src/main/resources/templates/exchange/settings.yml
+PASS src/main/resources/templates/shared/settings.yml
+PASS src/main/resources/templates/integrations/nusa-karsa.yml
+PASS src/main/resources/templates/integrations/waystone.yml
+TOTAL 17 resource files; template placeholders substituted; PyYAML syntax only

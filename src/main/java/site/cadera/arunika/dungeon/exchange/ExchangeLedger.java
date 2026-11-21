@@ -1,0 +1,35 @@
+package site.cadera.arunika.dungeon.exchange;
+import java.sql.*;
+import java.nio.file.Path;
+import java.util.*;
+/** Single worker owns this connection. Reservation and stock/limit accounting are one SQLite transaction. */
+public final class ExchangeLedger implements AutoCloseable {
+ private final Connection c;
+ public enum State { RESERVED, DEBITED, DELIVERED, CANCELLED }
+ public record Tx(UUID id,UUID player,UUID reward,int cost,State state){}
+ public ExchangeLedger(Path db)throws SQLException{c=DriverManager.getConnection("jdbc:sqlite:"+db.toAbsolutePath());try(Statement s=c.createStatement()){s.execute("PRAGMA busy_timeout=3000");s.execute("PRAGMA journal_mode=WAL");s.execute("PRAGMA synchronous=FULL");s.execute("CREATE INDEX IF NOT EXISTS adg_tx_player_status ON transactions(player_id,status)");s.execute("CREATE TABLE IF NOT EXISTS adg_exchange_meta(key TEXT PRIMARY KEY,value TEXT NOT NULL)");try(ResultSet r=s.executeQuery("PRAGMA integrity_check")){if(!r.next()||!r.getString(1).equals("ok"))throw new SQLException("Database integrity failed");}}catch(SQLException e){c.close();throw e;}}
+ private int update(String sql,Object... args)throws SQLException{try(var p=c.prepareStatement(sql)){bind(p,args);return p.executeUpdate();}}
+ private int number(String sql,Object... args)throws SQLException{try(var p=c.prepareStatement(sql)){bind(p,args);try(var r=p.executeQuery()){return r.next()?r.getInt(1):0;}}}
+ private static void bind(PreparedStatement p,Object...args)throws SQLException{for(int i=0;i<args.length;i++)p.setObject(i+1,args[i] instanceof UUID u?u.toString():args[i]);}
+ @FunctionalInterface interface Work<T>{T run()throws SQLException;}
+ private <T>T atomic(Work<T> w)throws SQLException{c.setAutoCommit(false);try{T result=w.run();c.commit();return result;}catch(SQLException|RuntimeException e){c.rollback();throw e;}finally{c.setAutoCommit(true);}}
+ public Tx reserve(UUID player,String name,ExchangeCatalog.Reward reward)throws SQLException{return atomic(()->{
+  if(!reward.enabled())throw new IllegalStateException("Reward disabled");if(reward.cost()<1||reward.cost()>1000000||reward.stock() < -1||reward.limit()<0||reward.revision()<1)throw new IllegalStateException("Invalid reward accounting");if(number("SELECT count(*) FROM transactions WHERE player_id=? AND status NOT IN ('DELIVERED','CANCELLED','ADG_CANCELLED','REFUNDED')",player)>0)throw new IllegalStateException("Pending transaction; contact admin");
+  update("INSERT OR IGNORE INTO reward_stock(reward_id,configured,remaining) VALUES (?,?,?)",reward.id(),reward.stock(),reward.stock());
+  try(var p=c.prepareStatement("SELECT configured,remaining FROM reward_stock WHERE reward_id=?")){bind(p,reward.id());try(var rs=p.executeQuery()){if(!rs.next()||rs.getInt(1)!=reward.stock())throw new IllegalStateException("Stock config differs; reconcile first");if((reward.stock()==-1&&rs.getInt(2)!=-1)||(reward.stock()>=0&&(rs.getInt(2)<0||rs.getInt(2)>reward.stock())))throw new IllegalStateException("Stock reconciliation required");if(rs.getInt(2)==0)throw new IllegalStateException("Out of stock");}}
+  int count=number("SELECT count FROM purchases WHERE player_id=? AND reward_id=?",player,reward.id());if(count<0||count==Integer.MAX_VALUE)throw new IllegalStateException("Purchase count requires reconciliation");if(reward.limit()>0&&count>=reward.limit())throw new IllegalStateException("Purchase limit reached");
+  if(reward.stock()>=0&&update("UPDATE reward_stock SET remaining=remaining-1 WHERE reward_id=? AND remaining>0",reward.id())!=1)throw new IllegalStateException("Out of stock");
+  update("INSERT INTO purchases(player_id,reward_id,count) VALUES (?,?,1) ON CONFLICT(player_id,reward_id) DO UPDATE SET count=count+1",player,reward.id());
+  UUID tx=UUID.randomUUID();update("INSERT INTO transactions(id,player_id,player_name,reward_id,reward_type,cost,status,detail) VALUES (?,?,?,?,?,?,?,?)",tx,player,name,reward.id(),reward.type().name(),reward.cost(),"ADG_RESERVED","v0.7.0; do not auto-replay");return new Tx(tx,player,reward.id(),reward.cost(),State.RESERVED);
+ });}
+ private static String status(State s){return switch(s){case RESERVED->"ADG_RESERVED";case DEBITED->"ADG_DEBITED";case DELIVERED->"DELIVERED";case CANCELLED->"ADG_CANCELLED";};}
+ private void move(Tx tx,State from,State to,String detail)throws SQLException{if(update("UPDATE transactions SET status=?,detail=?,updated_at=CURRENT_TIMESTAMP WHERE id=? AND player_id=? AND reward_id=? AND cost=? AND status=?",status(to),detail,tx.id(),tx.player(),tx.reward(),tx.cost(),status(from))!=1)throw new IllegalStateException("Transaction state mismatch");}
+ public void debit(Tx tx)throws SQLException{move(tx,State.RESERVED,State.DEBITED,"Inventory debit saved; delivery pending");}
+ public void delivered(Tx tx,String detail)throws SQLException{move(tx,State.DEBITED,State.DELIVERED,detail);}
+ public void cancel(Tx tx)throws SQLException{atomic(()->{move(tx,State.RESERVED,State.CANCELLED,"Verified no token debit");int restored=update("UPDATE reward_stock SET remaining=remaining+1 WHERE reward_id=? AND configured>=0 AND remaining>=0 AND remaining<configured",tx.reward());if(restored!=1&&number("SELECT count(*) FROM reward_stock WHERE reward_id=? AND configured=-1 AND remaining=-1",tx.reward())!=1)throw new IllegalStateException("Stock reconciliation required");if(update("UPDATE purchases SET count=count-1 WHERE player_id=? AND reward_id=? AND count>0",tx.player(),tx.reward())!=1)throw new IllegalStateException("Purchase reconciliation required");update("DELETE FROM purchases WHERE player_id=? AND reward_id=? AND count=0",tx.player(),tx.reward());return null;});}
+ public List<String> pending()throws SQLException{var out=new ArrayList<String>();try(var p=c.prepareStatement("SELECT id,player_name,reward_id,status,cost,detail FROM transactions WHERE status IN ('ADG_RESERVED','ADG_DEBITED') ORDER BY created_at LIMIT 100");var r=p.executeQuery()){while(r.next())out.add(r.getString(1)+" | "+r.getString(2)+" | "+r.getString(3)+" | "+r.getString(4)+" | "+r.getInt(5)+" tokens | "+r.getString(6));}return out;}
+ public Tx find(UUID id)throws SQLException{try(var p=c.prepareStatement("SELECT player_id,reward_id,cost,status FROM transactions WHERE id=?")){bind(p,id);try(var r=p.executeQuery()){if(!r.next())throw new IllegalStateException("Unknown transaction");State s=switch(r.getString(4)){case "ADG_RESERVED"->State.RESERVED;case "ADG_DEBITED"->State.DEBITED;default->throw new IllegalStateException("Not pending");};return new Tx(id,UUID.fromString(r.getString(1)),UUID.fromString(r.getString(2)),r.getInt(3),s);}}}
+ /** Manual verified resolution only; never automatically re-deliver uncertain items. */
+ public void resolve(UUID id,boolean noDebit)throws SQLException{Tx tx=find(id);if(noDebit){if(tx.state()!=State.RESERVED)throw new IllegalStateException("Debit recorded; cannot cancel");cancel(tx);}else{if(tx.state()==State.RESERVED)debit(tx);delivered(tx,"Admin verified resolution; no automatic item delivery");}}
+ @Override public void close()throws SQLException{c.close();}
+}
