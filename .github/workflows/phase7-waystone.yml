@@ -1,0 +1,42 @@
+name: Phase7 Waystone integrated official-dependency build
+on:
+  workflow_dispatch:
+  push:
+    branches: [phase7-waystone-integration]
+    paths:
+      - ArunikaDungeon-1.0.0-Phase7-integrated-source.zip
+      - .github/workflows/phase7-waystone.yml
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify exact Work 1.0.0 + Phase3-6 source archive
+        run: |
+          echo '6a56acedc4b8f4ad12c9ee7e41d7e87c9a8d78e052a00c7b11387b61696681ac  ArunikaDungeon-1.0.0-Phase7-integrated-source.zip' | sha256sum -c -
+          unzip -q ArunikaDungeon-1.0.0-Phase7-integrated-source.zip -d source
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+          cache-dependency-path: source/ArunikaDungeon-1.0.0/pom.xml
+      - name: Compile official dependencies and run regression + Phase7 tests
+        working-directory: source/ArunikaDungeon-1.0.0
+        run: bash tools/build-verified.sh
+      - name: Upload verified staging JAR
+        uses: actions/upload-artifact@v4
+        with:
+          name: ArunikaDungeon-1.0.0-Phase7-Waystone-staging
+          path: source/ArunikaDungeon-1.0.0/target/verified/
+          if-no-files-found: error
+      - name: Upload build diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Phase7-Waystone-diagnostics
+          path: source/ArunikaDungeon-1.0.0/build-logs/
+          if-no-files-found: warn
