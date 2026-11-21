@@ -203,6 +203,7 @@ public final class DungeonWaystoneBedrockPlugin extends JavaPlugin implements Li
             if(created>=max)break;
             try {
                 UUID id=(UUID)call(n,"id");
+                if (!Boolean.TRUE.equals(call(core,"dedicated",n))) continue;
                 String entityId=ModelCatalog.forRole(call(n,"role").toString());
                 if(entityId==null)continue;
                 Location loc=(Location)call(core,"location",n);
@@ -236,6 +237,18 @@ public final class DungeonWaystoneBedrockPlugin extends JavaPlugin implements Li
             }catch(Exception|LinkageError e){getLogger().warning("Could not sync dungeon model: "+e.getMessage());}
         }
         for(VisualProxy item:List.copyOf(visuals.values()))if(!required.contains(item.nodeId()))removeProxy(item);
+        // Scan original furniture once per node per cycle, not once per Bedrock player.
+        Map<UUID,List<Entity>> originals=new HashMap<>();
+        if(getConfig().getBoolean("render.hide-original-for-bedrock",true)) {
+            for(VisualProxy item:visuals.values()) {
+                List<Entity> matches=new ArrayList<>();
+                for(Entity e:item.stand().getWorld().getNearbyEntities(
+                        item.stand().getLocation().clone().add(0,1,0),2,3,2)) {
+                    if(ownedFurniture(e,item.nodeId())) matches.add(e);
+                }
+                originals.put(item.nodeId(),matches);
+            }
+        }
         for(Player p:Bukkit.getOnlinePlayers()) {
             boolean isBedrock=clients.contains(p);
             Set<UUID> now=new HashSet<>();
@@ -244,13 +257,9 @@ public final class DungeonWaystoneBedrockPlugin extends JavaPlugin implements Li
                 boolean near=isBedrock && p.getLocation().distanceSquared(item.stand().getLocation())<=squared;
                 if(near) {
                     p.showEntity(this,item.stand());
-                    if(getConfig().getBoolean("render.hide-original-for-bedrock",true)) {
-                        for(Entity e:item.stand().getWorld().getNearbyEntities(item.stand().getLocation().clone().add(0,1,0),2,3,2)) {
-                            if(ownedFurniture(e,item.nodeId())) {
-                                now.add(e.getUniqueId());
-                                p.hideEntity(this,e);
-                            }
-                        }
+                    for(Entity e:originals.getOrDefault(item.nodeId(),List.of())) {
+                        now.add(e.getUniqueId());
+                        p.hideEntity(this,e);
                     }
                 } else p.hideEntity(this,item.stand());
             }
