@@ -1,0 +1,28 @@
+name: Phase11 audit source snapshot
+on:
+  push:
+    branches: [phase11-bedrock-dungeon-model]
+    paths:
+      - '.github/workflows/phase11-audit-source.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  source:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Capture exact source revision for offline audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p source-snapshot
+          cp -a bedrock-dungeon-model source-snapshot/
+          printf '%s\n' "$GITHUB_SHA" > source-snapshot/COMMIT.txt
+          (cd source-snapshot && find bedrock-dungeon-model -type f -print0 | sort -z | xargs -0 sha256sum > SOURCE-SHA256SUMS.txt)
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ArunikaDungeonWaystoneBedrock-0.2.0-full-source-audit
+          path: source-snapshot/
+          if-no-files-found: error
