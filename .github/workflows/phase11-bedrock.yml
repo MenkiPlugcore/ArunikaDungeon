@@ -1,0 +1,51 @@
+name: Phase11 Bedrock Dungeon Waystone model (Paper build)
+on:
+  push:
+    branches: [phase11-bedrock-dungeon-model]
+    paths:
+      - 'bedrock-dungeon-model/**'
+      - '.github/workflows/phase11-bedrock.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+          cache-dependency-path: bedrock-dungeon-model/pom.xml
+      - name: Compile with real Paper 1.21.11 API
+        working-directory: bedrock-dungeon-model
+        run: mvn -B -ntp clean package -DskipTests
+      - name: Run eight standalone model routing assertions
+        working-directory: bedrock-dungeon-model
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p target/model-tests
+          javac --release 21 -d target/model-tests src/main/java/dev/arunika/dungeonwaystone/bedrock/ModelCatalog.java src/test/java/dev/arunika/dungeonwaystone/bedrock/ModelCatalogTest.java
+          java -cp target/model-tests dev.arunika.dungeonwaystone.bedrock.ModelCatalogTest
+      - name: Verify metadata and Java 21 bytecode
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p verified
+          cp bedrock-dungeon-model/target/ArunikaDungeonWaystoneBedrock-0.2.0.jar verified/
+          cp bedrock-dungeon-model/README-ID.md verified/
+          unzip -t verified/ArunikaDungeonWaystoneBedrock-0.2.0.jar | tail -1
+          unzip -p verified/ArunikaDungeonWaystoneBedrock-0.2.0.jar plugin.yml | grep -F "version: '0.2.0'"
+          unzip -p verified/ArunikaDungeonWaystoneBedrock-0.2.0.jar plugin.yml | grep -F "depend: [ArunikaDungeonWaystone, Geyser-Spigot]"
+          javap -verbose -classpath verified/ArunikaDungeonWaystoneBedrock-0.2.0.jar dev.arunika.dungeonwaystone.bedrock.DungeonWaystoneBedrockPlugin | grep -F 'major version: 65'
+          (cd verified && sha256sum *.jar > SHA256SUMS.txt)
+          echo "Compiled and static tests passed; Bedrock runtime still NOT TESTED" > verified/BUILD-STATUS.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ArunikaDungeonWaystoneBedrock-0.2.0-verified-staging
+          path: verified/
+          if-no-files-found: error
