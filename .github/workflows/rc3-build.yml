@@ -5,6 +5,8 @@ on:
     branches: [main]
     paths:
       - ArunikaDungeon-v1.0.0-RC3-source.zip
+      - patches/rc3-yaml-fix.py
+      - .github/workflows/rc3-build.yml
 permissions:
   contents: read
 jobs:
@@ -17,6 +19,8 @@ jobs:
         run: |
           echo 'd3fd3eacfa681c74b7ce8d959b0ace8ffc6bc7a50d9f10eb931abb719061cbdb  ArunikaDungeon-v1.0.0-RC3-source.zip' | sha256sum -c -
           unzip -q ArunikaDungeon-v1.0.0-RC3-source.zip -d source
+      - name: Apply RC3 YAML security-compatible fix
+        run: python3 patches/rc3-yaml-fix.py source/ArunikaDungeon-v1.0.0-RC3
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
