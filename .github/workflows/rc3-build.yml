@@ -1,0 +1,41 @@
+name: Verified RC3 archive build
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - ArunikaDungeon-v1.0.0-RC3-source.zip
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify and extract exact RC3 source
+        run: |
+          echo 'd3fd3eacfa681c74b7ce8d959b0ace8ffc6bc7a50d9f10eb931abb719061cbdb  ArunikaDungeon-v1.0.0-RC3-source.zip' | sha256sum -c -
+          unzip -q ArunikaDungeon-v1.0.0-RC3-source.zip -d source
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+          cache-dependency-path: source/ArunikaDungeon-v1.0.0-RC3/pom.xml
+      - name: Compile against official dependencies and run regression tests
+        working-directory: source/ArunikaDungeon-v1.0.0-RC3
+        run: bash tools/build-verified.sh
+      - name: Upload verified staging JAR
+        uses: actions/upload-artifact@v4
+        with:
+          name: ArunikaDungeon-1.0.0-RC3-staging
+          path: source/ArunikaDungeon-v1.0.0-RC3/target/verified/
+          if-no-files-found: error
+      - name: Upload diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: RC3-build-diagnostics
+          path: source/ArunikaDungeon-v1.0.0-RC3/build-logs/
+          if-no-files-found: warn
