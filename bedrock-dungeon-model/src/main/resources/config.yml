@@ -1,0 +1,13 @@
+# Only affects dungeon HUB and RETURN waystones; does not touch survival waystones.
+render:
+  enabled: true
+  radius-blocks: 48
+  update-interval-ticks: 20
+  max-models: 48
+  scale: 1.0
+  hide-original-for-bedrock: true
+  offset-y: 0.0
+pack:
+  # Install separate ArunikaDungeonWaystone-Bedrock-Models-v0.2.0.mcpack
+  # into plugins/Geyser-Spigot/packs before a complete server STOP/START.
+  name: ArunikaDungeonWaystone-Bedrock-Models-v0.2.0.mcpack
