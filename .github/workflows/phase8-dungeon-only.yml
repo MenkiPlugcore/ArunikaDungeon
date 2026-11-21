@@ -31,6 +31,10 @@ jobs:
           cp delta/ArunikaDungeon-1.0.1/src/main/java/site/cadera/arunika/dungeon/paper/DungeonOnlyBridge.java work/ArunikaDungeon-1.0.1/src/main/java/site/cadera/arunika/dungeon/paper/
           cp delta/patch_adg_101.py work/patch_adg_101.py
           python3 work/patch_adg_101.py
+          sed -i '0,/<version>1.0.0<\/version>/s//<version>1.0.1<\/version>/' work/ArunikaDungeon-1.0.1/pom.xml
+          sed -i 's@<finalName>ArunikaDungeon-1.0.0</finalName>@<finalName>ArunikaDungeon-1.0.1</finalName>@' work/ArunikaDungeon-1.0.1/pom.xml
+          sed -i "s/version: '1.0.0'/version: '1.0.1'/" work/ArunikaDungeon-1.0.1/src/main/resources/plugin.yml
+          grep -qF "version: '1.0.1'" work/ArunikaDungeon-1.0.1/src/main/resources/plugin.yml
           grep -q 'ArunikaDungeonWaystone' work/ArunikaDungeon-1.0.1/src/main/java/site/cadera/arunika/dungeon/paper/PaperGateway.java
           ! grep -q 'getPlugin("CdrWaystone")' work/ArunikaDungeon-1.0.1/src/main/java/site/cadera/arunika/dungeon/paper/PaperGateway.java
       - name: Pure Java node role validation
