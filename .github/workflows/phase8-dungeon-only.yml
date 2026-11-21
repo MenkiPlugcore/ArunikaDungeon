@@ -23,7 +23,7 @@ jobs:
         run: |
           set -euo pipefail
           echo '6a56acedc4b8f4ad12c9ee7e41d7e87c9a8d78e052a00c7b11387b61696681ac  ArunikaDungeon-1.0.0-Phase7-integrated-source.zip' | sha256sum -c -
-          echo '6c5e51c047166e7ab93f8cc96f12b29d53ee1ce57ccf5627309d0d7c7f7a87ac  ArunikaDungeonWaystone-dungeon-only-delta.zip' | sha256sum -c -
+          echo 'ad8faccd2853bb63e49dbf06fe9b64d07e2be9c7fd50c6708a89a54e709f0a8e  ArunikaDungeonWaystone-dungeon-only-delta.zip' | sha256sum -c -
           mkdir -p work delta
           unzip -q ArunikaDungeon-1.0.0-Phase7-integrated-source.zip -d work
           unzip -q ArunikaDungeonWaystone-dungeon-only-delta.zip -d delta
