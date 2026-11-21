@@ -1,0 +1,15 @@
+name: ArunikaDungeonWaystoneBedrock
+version: '0.2.0'
+main: dev.arunika.dungeonwaystone.bedrock.DungeonWaystoneBedrockPlugin
+api-version: '1.21.11'
+authors: [CADERA]
+description: Dungeon-only Geyser model renderer for original Waystone Blackstone/Portstone assets. No gameplay or resource pack changes.
+depend: [ArunikaDungeonWaystone, Geyser-Spigot]
+softdepend: [floodgate, ItemsAdder]
+commands:
+  adwbedrock:
+    description: Dungeon Waystone Bedrock model renderer diagnostics
+    permission: arunika.dungeonwaystone.admin
+permissions:
+  arunika.dungeonwaystone.admin:
+    default: op
