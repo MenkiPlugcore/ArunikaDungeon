@@ -1,0 +1,107 @@
+name: Dungeon-Only Waystone and ArunikaDungeon 1.0.1 staging build
+on:
+  workflow_dispatch:
+  push:
+    branches: [phase8-dungeon-only]
+    paths:
+      - 'ArunikaDungeonWaystone-dungeon-only-delta.zip'
+      - '.github/workflows/phase8-dungeon-only.yml'
+permissions:
+  contents: read
+jobs:
+  verified-build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+      - name: Verify original Work Phase7 and addon patch archives
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo '6a56acedc4b8f4ad12c9ee7e41d7e87c9a8d78e052a00c7b11387b61696681ac  ArunikaDungeon-1.0.0-Phase7-integrated-source.zip' | sha256sum -c -
+          echo '6c5e51c047166e7ab93f8cc96f12b29d53ee1ce57ccf5627309d0d7c7f7a87ac  ArunikaDungeonWaystone-dungeon-only-delta.zip' | sha256sum -c -
+          mkdir -p work delta
+          unzip -q ArunikaDungeon-1.0.0-Phase7-integrated-source.zip -d work
+          unzip -q ArunikaDungeonWaystone-dungeon-only-delta.zip -d delta
+          mv work/ArunikaDungeon-1.0.0 work/ArunikaDungeon-1.0.1
+          cp delta/ArunikaDungeon-1.0.1/src/main/java/site/cadera/arunika/dungeon/paper/DungeonOnlyBridge.java work/ArunikaDungeon-1.0.1/src/main/java/site/cadera/arunika/dungeon/paper/
+          cp delta/patch_adg_101.py work/patch_adg_101.py
+          python3 work/patch_adg_101.py
+          grep -q 'ArunikaDungeonWaystone' work/ArunikaDungeon-1.0.1/src/main/java/site/cadera/arunika/dungeon/paper/PaperGateway.java
+          ! grep -q 'getPlugin("CdrWaystone")' work/ArunikaDungeon-1.0.1/src/main/java/site/cadera/arunika/dungeon/paper/PaperGateway.java
+      - name: Pure Java node role validation
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p pure-java
+          javac --release 21 -d pure-java delta/ArunikaDungeonWaystone-core/src/main/java/dev/arunika/dungeonwaystone/Node.java delta/tests/NodeTest.java
+          java -cp pure-java NodeTest
+      - name: Compile DungeonWaystone core against real Paper API
+        working-directory: delta/ArunikaDungeonWaystone-core
+        run: mvn -B -ntp clean verify -DskipTests
+      - name: Compile Bedrock native-Lodestone companion against real Paper API
+        working-directory: delta/ArunikaDungeonWaystoneBedrock
+        run: mvn -B -ntp clean verify -DskipTests
+      - name: Compile ArunikaDungeon 1.0.1 against real Paper API
+        working-directory: work/ArunikaDungeon-1.0.1
+        run: mvn -B -ntp clean verify -DskipTests org.apache.maven.plugins:maven-dependency-plugin:3.8.1:build-classpath -Dmdep.outputFile=target/dependencies.txt
+      - name: Dungeon core regression and Waystone Phase3-6 tests
+        shell: bash
+        working-directory: work/ArunikaDungeon-1.0.1
+        run: |
+          set -euo pipefail
+          cp="target/classes:target/test-classes:$(cat target/dependencies.txt)"
+          for suite in             site.cadera.arunika.dungeon.core.CoreTest             site.cadera.arunika.dungeon.battle.BattleTest             site.cadera.arunika.dungeon.battle.GatewayTest             site.cadera.arunika.dungeon.battle.LootTest             site.cadera.arunika.dungeon.shared.SharedTest             site.cadera.arunika.dungeon.privategame.PrivateTest             site.cadera.arunika.dungeon.core.DatabaseMigrationTest             site.cadera.arunika.dungeon.exchange.ExchangeTest             site.cadera.arunika.dungeon.config.AdminConfigTest             site.cadera.arunika.dungeon.battle.RpgTest             site.cadera.arunika.dungeon.core.ShutdownTest             site.cadera.arunika.dungeon.core.PerformanceGuardTest             site.cadera.arunika.dungeon.exchange.ExchangeStressTest             site.cadera.arunika.dungeon.config.RecoveryJournalTest             site.cadera.arunika.dungeon.exchange.AccountingGuardTest             site.cadera.arunika.dungeon.battle.LootRecoveryTest             site.cadera.arunika.dungeon.paper.GatewayAimTest             site.cadera.arunika.dungeon.battle.TeleportSafetyTest             site.cadera.arunika.dungeon.paper.GatewayMenuStyleTest             site.cadera.arunika.dungeon.paper.GatewayPhase6Test ; do
+            echo "Running $suite"
+            if [ "$suite" = "site.cadera.arunika.dungeon.exchange.ExchangeTest" ]; then
+              java -cp "$cp" "$suite" jdbc
+            else
+              java -cp "$cp" "$suite"
+            fi
+          done
+          java -cp "$cp" site.cadera.arunika.dungeon.config.ConfigTest site.cadera.arunika.dungeon.config.SnakeYamlCodec
+          python3 tools/test-smoke.py
+      - name: Verify JARs, plugin metadata, Java 21 and SHA-256
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p verified
+          cp delta/ArunikaDungeonWaystone-core/target/ArunikaDungeonWaystone-0.1.0.jar verified/
+          cp delta/ArunikaDungeonWaystoneBedrock/target/ArunikaDungeonWaystoneBedrock-0.1.0.jar verified/
+          cp work/ArunikaDungeon-1.0.1/target/ArunikaDungeon-1.0.1.jar verified/
+          cp delta/docs/README-ID.md verified/INSTALLATION-ID.md
+          cp ArunikaDungeonWaystone-dungeon-only-delta.zip verified/
+          for file in verified/*.jar; do
+            unzip -t "$file" | tail -n 1
+            unzip -p "$file" plugin.yml | grep -E '^name:|^version:|^main:'
+            test "$(unzip -p "$file" plugin.yml | grep -c '^main:')" -eq 1
+          done
+          unzip -p verified/ArunikaDungeonWaystone-0.1.0.jar plugin.yml | grep -F "version: '0.1.0'"
+          unzip -p verified/ArunikaDungeonWaystoneBedrock-0.1.0.jar plugin.yml | grep -F "version: '0.1.0'"
+          unzip -p verified/ArunikaDungeon-1.0.1.jar plugin.yml | grep -F "version: '1.0.1'"
+          javap -verbose -classpath verified/ArunikaDungeonWaystone-0.1.0.jar dev.arunika.dungeonwaystone.DungeonWaystonePlugin | grep -F 'major version: 65'
+          javap -verbose -classpath verified/ArunikaDungeonWaystoneBedrock-0.1.0.jar dev.arunika.dungeonwaystone.bedrock.DungeonWaystoneBedrockPlugin | grep -F 'major version: 65'
+          javap -verbose -classpath verified/ArunikaDungeon-1.0.1.jar site.cadera.arunika.dungeon.paper.PaperGateway | grep -F 'major version: 65'
+          (cd verified && sha256sum *.jar *.zip > SHA256SUMS.txt)
+          printf 'OFFICIAL PAPER API COMPILATION COMPLETE.\nPure Java node validation passed.\nRuntime Paper, client Java and Bedrock NOT TESTED.\nSTAGING ONLY.\n' > verified/BUILD-STATUS.txt
+      - name: Upload all verified staging assets
+        uses: actions/upload-artifact@v4
+        with:
+          name: Arunika-DungeonWaystone-0.1.0-and-Dungeon-1.0.1-STAGING
+          path: verified/
+          if-no-files-found: error
+      - name: Upload diagnostics if build fails
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Arunika-DungeonWaystone-Phase8-diagnostics
+          path: |
+            work/ArunikaDungeon-1.0.1/target/
+            delta/ArunikaDungeonWaystone-core/target/
+            delta/ArunikaDungeonWaystoneBedrock/target/
+          if-no-files-found: warn
