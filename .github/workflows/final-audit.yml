@@ -1,0 +1,38 @@
+name: Dungeon Waystone canonical RC audit
+on:
+  workflow_dispatch:
+  push:
+    branches: ['audit/final-dungeon-waystone-*']
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+          cache-dependency-path: '**/pom.xml'
+      - name: Build and execute all JUnit regression suites
+        run: mvn -B -ntp clean verify
+      - name: Check historical verifier rejection cases
+        run: bash arunika-dungeon/tools/test-verifier.sh
+      - name: Check smoke-test monitor
+        run: python3 arunika-dungeon/tools/test-smoke.py
+      - name: Validate and package newly built outputs
+        run: python3 scripts/package.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ARUNIKA-Dungeon-Waystone-RC-staging
+          path: dist/
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: regression-reports
+          path: '**/target/surefire-reports/'

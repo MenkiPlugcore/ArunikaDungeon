@@ -1,0 +1,15 @@
+schema-version: 1
+# Existing CdrWaystone data is NEVER imported, removed, rewritten, or migrated.
+anchor-material: LODESTONE
+max-nodes: 64
+interaction-radius: 6.0
+# Staging: admin export must be manually reviewed and copied into ArunikaDungeon.
+dungeon-integration:
+  automatic-rewrite-other-plugin-files: false
+
+# Existing ItemsAdder model IDs from the old CdrWaystone skins.yml. No new pack.
+visuals:
+  enabled: true
+  hub-skin: blackstone
+  return-skin: portstone
+  rotation-degrees: 0

@@ -1,0 +1,29 @@
+{
+  "format_version": 2,
+  "header": {
+    "name": "Arunika Dungeon Waystone \u2014 Original Models",
+    "description": "Dungeon-only Bedrock hub and return models. Reuses legacy Blackstone and Portstone assets.",
+    "uuid": "370b11e6-501f-529c-a183-85deb81d6246",
+    "version": [
+      1,
+      0,
+      0
+    ],
+    "min_engine_version": [
+      1,
+      21,
+      0
+    ]
+  },
+  "modules": [
+    {
+      "type": "resources",
+      "uuid": "a1b432a2-7664-55da-912b-db8fdaa3877c",
+      "version": [
+        1,
+        0,
+        0
+      ]
+    }
+  ]
+}

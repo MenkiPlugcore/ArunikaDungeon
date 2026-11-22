@@ -1,0 +1,38 @@
+name: ArunikaDungeon
+version: '1.0.2-RC1'
+main: site.cadera.arunika.dungeon.paper.ArunikaDungeonPlugin
+api-version: '1.21.11'
+author: Cadera
+description: "Phase II Shared and Private staging; dungeon-only Waystone gateway staging."
+softdepend: [LuckPerms, ItemsAdder, MMOItems, MythicMobs, ArunikaDungeonWaystone, ArunikaDungeonWaystoneBedrock, CdrDungeonSpawner, ArunikaDungeonExchange, ArunikaNusaKarsa, CdrWaystoneBedrock, Geyser-Spigot, ModelEngine, AdvancedEnchantments, Multiverse-Core, Multiverse-Inventories, WorldGuard, floodgate]
+libraries:
+  - org.yaml:snakeyaml:2.3
+  - org.xerial:sqlite-jdbc:3.46.1.3
+commands:
+  arunikadungeon:
+    aliases: [adg]
+    description: Foundation diagnostics and opt-in staging battle preview
+    usage: /adg [status|legacy|create|reload|preview|shared|private|ticket|loot|gateway|diagnostics|admin|setup|help]
+  dg:
+    description: Dungeon Exchange (legacy owner has priority)
+    permission: arunika.dg.use
+  opdg:
+    description: Dungeon Exchange admin (legacy owner has priority)
+    permission: arunika.dg.admin
+permissions:
+  arunika.dungeon.exchange.test:
+    default: op
+  arunika.dungeon.gateway.test:
+    default: op
+  arunika.dungeon.admin:
+    default: op
+  arunika.dungeon.shared.test:
+    default: op
+  arunika.dungeon.private.test:
+    default: op
+  arunika.dg.use:
+    default: true
+  arunika.dg.admin:
+    default: op
+  arunika.dg.toggle:
+    default: op

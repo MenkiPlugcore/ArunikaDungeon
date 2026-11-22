@@ -1,0 +1,16 @@
+name: ArunikaDungeonWaystone
+version: '1.0.0-RC1'
+main: dev.arunika.dungeonwaystone.DungeonWaystonePlugin
+api-version: '1.21.11'
+authors: [CADERA]
+description: 'Dungeon-only HUB and RETURN waystone registry; reuses previous ItemsAdder Waystone models; does not touch survival waystones.'
+softdepend: [CdrWaystone, ItemsAdder]
+commands:
+  adw:
+    description: Set and inspect dungeon-only waystones
+    usage: /adw [hub|return <floor> <arena>|remove|list|status|inspect|export|check|refresh]
+permissions:
+  arunika.dungeonwaystone.admin:
+    default: op
+  arunika.dungeonwaystone.use:
+    default: true

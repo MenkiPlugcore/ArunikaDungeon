@@ -1,0 +1,8 @@
+schema-version: 2
+enabled: false
+legacy-ownership: true
+ticket-exchange:
+  enabled: false
+  cost: 50
+permission-rewards-enabled: false
+allowed-permission-nodes: []

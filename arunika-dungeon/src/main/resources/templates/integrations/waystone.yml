@@ -1,0 +1,8 @@
+schema-version: 2
+# Opt-in staging. Binds nodes from ArunikaDungeonWaystone. Existing survival waystones untouched.
+enabled: false
+gateway-id: ''
+hub: {world: '', x: 0, y: 0, z: 0}
+interaction-radius: 6
+# Dungeon-only RETURN node UUID: floor-id/arena-id
+return-waystones: {}

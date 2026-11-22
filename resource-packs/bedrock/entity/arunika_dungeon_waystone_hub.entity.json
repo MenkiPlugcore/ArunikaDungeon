@@ -1,0 +1,21 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "arunika_dungeon:waystone_hub",
+      "materials": {
+        "default": "entity_alphatest"
+      },
+      "textures": {
+        "frame000": "textures/entity/arunika_dungeon/waystone_blackstone_frame000"
+      },
+      "geometry": {
+        "default": "geometry.arunika_dungeon.waystone_blackstone"
+      },
+      "render_controllers": [
+        "controller.render.arunika_dungeon.waystone_blackstone"
+      ],
+      "enable_attachables": false
+    }
+  }
+}

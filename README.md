@@ -1,14 +1,19 @@
-# ArunikaDungeon — Guardian Awakening RC3
+# ARUNIKA Dungeon Waystone — RC1 / STAGING
 
-Release candidate; not production-ready. This repository is initially a build bootstrap, not the source distribution.
+Hasil audit 21 November 2026. **Belum Production Ready / Official Stable.**
 
-## Build RC3
+| Komponen | Versi |
+|---|---|
+| ArunikaDungeon | 1.0.2-RC1 |
+| ArunikaDungeonWaystone | 1.0.0-RC1 |
+| ArunikaDungeonWaystoneBedrock | 1.0.0-RC1 |
+| Bedrock Models | 1.0.0 (pack dalam paket staging) |
 
-1. Upload the exact `ArunikaDungeon-v1.0.0-RC3-source.zip` archive from the chat to the repository root on `main` (do not rename or extract it).
-2. Expected SHA-256: `d3fd3eacfa681c74b7ce8d959b0ace8ffc6bc7a50d9f10eb931abb719061cbdb`.
-3. Open [Actions](https://github.com/MenkiPlugcore/ArunikaDungeon/actions). The archive build workflow runs on upload, or can be started manually once the archive exists.
-4. Download the verified staging artifact only if every build step succeeds. If it fails, inspect the diagnostics and compiler output.
+Alur tetap: /warp dungeon → klik HUB → Shared / Private → pilih boss → arena → Return → HUB.
+Dungeon memiliki gameplay; Waystone core memiliki registry/model Java; Bedrock hanya renderer. Tidak ada fitur survival/personal/discovery/crafting/Vault baru.
 
-This repository is public. Change it to private before uploading if the source should not be public. Never upload production databases, player data, credentials, or third-party plugin JARs.
+Baca INSTALLATION-GUIDE, MIGRATION-GUIDE, KNOWN-ISSUES, dan RUNTIME-TEST-REPORT sebelum memasang. Gunakan salinan server untuk penerimaan Java dan Android.
 
-Target: Java 21, Paper 1.21.11. A successful build is not proof of runtime compatibility. Do not replace production dungeon plugins before staging tests pass.
+Build source canonical dari root: `mvn -B -ntp clean verify`, lalu `python3 scripts/package.py`. Membutuhkan JDK 21 dan Maven 3.9.x. Semua source modul telah diekstrak; tidak membutuhkan rantai patch Phase 7–11 untuk build.
+
+JAR terverifikasi berasal dari build baru dengan dependency resmi; berhasil build tidak sama dengan gameplay/client acceptance. SHA256SUMS memverifikasi integritas, bukan tanda tangan penerbit.

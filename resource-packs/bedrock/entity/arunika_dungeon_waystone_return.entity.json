@@ -1,0 +1,21 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "arunika_dungeon:waystone_return",
+      "materials": {
+        "default": "entity_alphatest"
+      },
+      "textures": {
+        "frame000": "textures/entity/arunika_dungeon/waystone_portstone_frame000"
+      },
+      "geometry": {
+        "default": "geometry.arunika_dungeon.waystone_portstone"
+      },
+      "render_controllers": [
+        "controller.render.arunika_dungeon.waystone_portstone"
+      ],
+      "enable_attachables": false
+    }
+  }
+}
