@@ -1,3 +1,5 @@
+> Panduan dasar RC1 tetap berlaku kecuali versi JAR dan alur admin yang diperbarui pada **GUI-SETUP-ID.md**. RC2: Dungeon 1.0.3-RC2; core/Bedrock 1.0.1-RC2.
+
 # Model Bedrock
 
 Pack: `ArunikaDungeonWaystone-Bedrock-Models.mcpack`, versi 1.0.0. UUID header dan module lama dipertahankan agar upgrade dikenali; angka versi naik dari 0.2.0. Jangan memuat kedua versi bersamaan.

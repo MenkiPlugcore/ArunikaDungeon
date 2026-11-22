@@ -1,3 +1,5 @@
+> Laporan historis RC1. Pengujian upgrade GUI/nama ada di **RC2-TEST-REPORT.md**.
+
 # Pengujian server nyata
 
 Status: **startup / restart / registrasi Geyser PASS; gameplay dan client acceptance belum diuji.**

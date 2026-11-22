@@ -16,7 +16,7 @@ public class VerifyArtifact {
         return HexFormat.of().formatHex(md.digest());
     }
     static final String BASE="site/cadera/arunika/dungeon/";
-    static final String VERSION="1.0.2-RC1";
+    static final String VERSION="1.0.3-RC2";
     static void checkJar(Path jar, Path source) throws Exception {
         try(var zip=new JarFile(jar.toFile())) {
             Set<String> names=new HashSet<>(); var en=zip.entries();int classes=0;

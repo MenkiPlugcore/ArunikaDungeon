@@ -1,3 +1,5 @@
+> Panduan dasar RC1 tetap berlaku kecuali versi JAR dan alur admin yang diperbarui pada **GUI-SETUP-ID.md**. RC2: Dungeon 1.0.3-RC2; core/Bedrock 1.0.1-RC2.
+
 # Setup Dungeon
 
 1. Pastikan MythicMobs aktif dan ID mob benar-benar ada. Plugin tidak menyediakan definisi boss/skill baru.

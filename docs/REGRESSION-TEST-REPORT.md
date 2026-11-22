@@ -1,3 +1,5 @@
+> Laporan historis RC1. Pengujian upgrade GUI/nama ada di **RC2-TEST-REPORT.md**.
+
 # Pengujian regresi
 
 Build Java 21 pada 21 November 2026; paket diselesaikan 22 November 2026. **33 kasus/suite JUnit lulus, tanpa failure/error/skip.** Sebagian kasus adalah adapter untuk suite main-method lama yang berisi banyak assertion; angka 33 bukan jumlah skenario gameplay dengan client nyata.

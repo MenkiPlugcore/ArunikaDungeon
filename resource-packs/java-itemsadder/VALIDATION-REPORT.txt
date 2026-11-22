@@ -1,0 +1,10 @@
+PASS original elements/UV/display preserved: waystone_blackstone
+PASS original furniture options preserved: waystone_blackstone
+PASS original elements/UV/display preserved: waystone_portstone
+PASS original furniture options preserved: waystone_portstone
+PASS all texture references resolve: 9 unique PNGs
+PASS exact two furniture IDs, no survival namespace output files
+PASS YAML round-trip and JSON parse
+NOT TESTED: ItemsAdder runtime loading and /iazip on user server
+NOT TESTED: Java client visuals, height/rotation/offset and tap/click
+No JAR changed; use existing RC1 plugins and existing Bedrock pack

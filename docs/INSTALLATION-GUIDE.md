@@ -1,3 +1,5 @@
+> Panduan dasar RC1 tetap berlaku kecuali versi JAR dan alur admin yang diperbarui pada **GUI-SETUP-ID.md**. RC2: Dungeon 1.0.3-RC2; core/Bedrock 1.0.1-RC2.
+
 # Instalasi staging
 
 1. STOP server; backup JAR lama, ketiga folder konfigurasi/data Dungeon, konfigurasi Geyser, packs, serta world terkait. Jangan menghapus database/ledger.

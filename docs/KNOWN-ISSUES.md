@@ -1,3 +1,5 @@
+> Panduan dasar RC1 tetap berlaku kecuali versi JAR dan alur admin yang diperbarui pada **GUI-SETUP-ID.md**. RC2: Dungeon 1.0.3-RC2; core/Bedrock 1.0.1-RC2.
+
 # Batasan yang masih terbuka
 
 - Tampilan dan klik model ItemsAdder/Bedrock Android asli belum diuji. Registrasi Geyser 2/2 tidak membuktikan bahwa model terlihat pada HP.

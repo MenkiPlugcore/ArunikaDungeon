@@ -1,0 +1,357 @@
+{
+  "credit": "Adapted for Vephilim ItemsAdder from user-provided 1.21.11 Waystones texture pack",
+  "textures": {
+    "b_texture": "arunika_dungeon_waystones:source/waystones/blackstone_waystone_bottom",
+    "b_1": "arunika_dungeon_waystones:source/waystones/blackstone_waystone",
+    "t_texture": "arunika_dungeon_waystones:source/waystones/blackstone_waystone_top",
+    "t_1": "arunika_dungeon_waystones:source/waystones/blackstone_waystone",
+    "particle": "arunika_dungeon_waystones:source/waystones/blackstone_waystone"
+  },
+  "elements": [
+    {
+      "name": "pillarBottom",
+      "from": [
+        3,
+        9,
+        3
+      ],
+      "to": [
+        13,
+        16,
+        13
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            3,
+            0,
+            13,
+            7
+          ],
+          "texture": "#b_texture"
+        },
+        "east": {
+          "uv": [
+            3,
+            0,
+            13,
+            7
+          ],
+          "texture": "#b_texture"
+        },
+        "south": {
+          "uv": [
+            3,
+            0,
+            13,
+            7
+          ],
+          "texture": "#b_texture"
+        },
+        "west": {
+          "uv": [
+            3,
+            0,
+            13,
+            7
+          ],
+          "texture": "#b_texture"
+        },
+        "up": {
+          "uv": [
+            3,
+            3,
+            13,
+            13
+          ],
+          "texture": "#b_1"
+        },
+        "down": {
+          "uv": [
+            3,
+            3,
+            13,
+            13
+          ],
+          "texture": "#b_1"
+        }
+      }
+    },
+    {
+      "name": "pillarBottom",
+      "from": [
+        1,
+        3,
+        1
+      ],
+      "to": [
+        15,
+        9,
+        15
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            1,
+            7,
+            15,
+            13
+          ],
+          "texture": "#b_texture"
+        },
+        "east": {
+          "uv": [
+            1,
+            7,
+            15,
+            13
+          ],
+          "texture": "#b_texture"
+        },
+        "south": {
+          "uv": [
+            1,
+            7,
+            15,
+            13
+          ],
+          "texture": "#b_texture"
+        },
+        "west": {
+          "uv": [
+            1,
+            7,
+            15,
+            13
+          ],
+          "texture": "#b_texture"
+        },
+        "up": {
+          "uv": [
+            1,
+            1,
+            15,
+            15
+          ],
+          "texture": "#b_1"
+        },
+        "down": {
+          "uv": [
+            1,
+            1,
+            15,
+            15
+          ],
+          "texture": "#b_1"
+        }
+      }
+    },
+    {
+      "name": "pillarBottom",
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "to": [
+        16,
+        3,
+        16
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            13,
+            16,
+            16
+          ],
+          "texture": "#b_texture"
+        },
+        "east": {
+          "uv": [
+            0,
+            13,
+            16,
+            16
+          ],
+          "texture": "#b_texture"
+        },
+        "south": {
+          "uv": [
+            0,
+            13,
+            16,
+            16
+          ],
+          "texture": "#b_texture"
+        },
+        "west": {
+          "uv": [
+            0,
+            13,
+            16,
+            16
+          ],
+          "texture": "#b_texture"
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#b_1"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#b_1"
+        }
+      }
+    },
+    {
+      "name": "pillarTop",
+      "from": [
+        3,
+        16,
+        3
+      ],
+      "to": [
+        13,
+        25,
+        13
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            3,
+            7,
+            13,
+            16
+          ],
+          "texture": "#t_texture"
+        },
+        "east": {
+          "uv": [
+            3,
+            7,
+            13,
+            16
+          ],
+          "texture": "#t_texture"
+        },
+        "south": {
+          "uv": [
+            3,
+            7,
+            13,
+            16
+          ],
+          "texture": "#t_texture"
+        },
+        "west": {
+          "uv": [
+            3,
+            7,
+            13,
+            16
+          ],
+          "texture": "#t_texture"
+        },
+        "up": {
+          "uv": [
+            3,
+            3,
+            13,
+            13
+          ],
+          "texture": "#t_1"
+        },
+        "down": {
+          "uv": [
+            3,
+            3,
+            13,
+            13
+          ],
+          "texture": "#t_1"
+        }
+      }
+    },
+    {
+      "name": "pillarTop",
+      "from": [
+        1,
+        25,
+        1
+      ],
+      "to": [
+        15,
+        32,
+        15
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            1,
+            0,
+            15,
+            7
+          ],
+          "texture": "#t_texture"
+        },
+        "east": {
+          "uv": [
+            1,
+            0,
+            15,
+            7
+          ],
+          "texture": "#t_texture"
+        },
+        "south": {
+          "uv": [
+            1,
+            0,
+            15,
+            7
+          ],
+          "texture": "#t_texture"
+        },
+        "west": {
+          "uv": [
+            1,
+            0,
+            15,
+            7
+          ],
+          "texture": "#t_texture"
+        },
+        "up": {
+          "uv": [
+            1,
+            1,
+            15,
+            15
+          ],
+          "texture": "#t_1"
+        },
+        "down": {
+          "uv": [
+            1,
+            1,
+            15,
+            15
+          ],
+          "texture": "#t_1"
+        }
+      }
+    }
+  ]
+}

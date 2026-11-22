@@ -1,3 +1,5 @@
+> Laporan historis RC1. Pengujian upgrade GUI/nama ada di **RC2-TEST-REPORT.md**.
+
 # Perubahan yang dilaksanakan
 
 | ID | Masalah/bukti | Perbaikan dan bukti |

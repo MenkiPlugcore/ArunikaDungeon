@@ -1,0 +1,51 @@
+# Original Blackstone/Portstone models; dedicated Dungeon namespace.
+# ItemsAdder 4.0.16, Java 1.21.11; build through ItemsAdder, not as a standalone client ZIP.
+info:
+  namespace: arunika_dungeon_waystones
+items:
+  waystone_blackstone:
+    name: Blackstone Waystone
+    show_in_ia_gui: false
+    graphics:
+      model: block/waystone_blackstone
+    behaviours:
+      furniture:
+        enabled: true
+        entity: item_display
+        gravity: false
+        fixed_rotation: true
+        solid: false
+        drop_when_mined: false
+        placeable_on:
+          floor: true
+          ceiling: false
+          walls: false
+        display_transformation:
+          transform: HEAD
+          auto_update_in_world: true
+          render_size:
+            width: 3
+            height: 3
+  waystone_portstone:
+    name: Portstone
+    show_in_ia_gui: false
+    graphics:
+      model: block/waystone_portstone
+    behaviours:
+      furniture:
+        enabled: true
+        entity: item_display
+        gravity: false
+        fixed_rotation: true
+        solid: false
+        drop_when_mined: false
+        placeable_on:
+          floor: true
+          ceiling: false
+          walls: false
+        display_transformation:
+          transform: HEAD
+          auto_update_in_world: true
+          render_size:
+            width: 3
+            height: 3

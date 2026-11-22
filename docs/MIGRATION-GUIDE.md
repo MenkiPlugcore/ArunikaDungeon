@@ -1,3 +1,5 @@
+> Panduan dasar RC1 tetap berlaku kecuali versi JAR dan alur admin yang diperbarui pada **GUI-SETUP-ID.md**. RC2: Dungeon 1.0.3-RC2; core/Bedrock 1.0.1-RC2.
+
 # Migrasi dari paket audit
 
 Baseline terverifikasi: Dungeon 1.0.1, core 0.2.0, Bedrock 0.2.0; checksum 17 file input cocok. Source terkini merupakan reconstructed Dungeon Phase7+8+9 serta core Phase10 dan Bedrock Phase11. Tidak memakai source RC6 sebagai baseline implementasi.

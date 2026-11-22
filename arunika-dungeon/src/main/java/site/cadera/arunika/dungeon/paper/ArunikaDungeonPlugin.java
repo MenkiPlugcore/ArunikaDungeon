@@ -41,6 +41,8 @@ public final class ArunikaDungeonPlugin extends JavaPlugin implements DungeonGat
     private PaperExchange exchange;
     private PaperGateway gateway;
     private PaperAdmin admin;
+    private PaperWaystoneAdmin waystoneAdmin;
+    private AdminTextInput textInput;
     @Override public void onEnable(){
         try {
             Path root=getDataFolder().toPath();
@@ -51,7 +53,7 @@ public final class ArunikaDungeonPlugin extends JavaPlugin implements DungeonGat
             ticketLedger=new TicketLedger(root.resolve("data/tickets"));
             try{for(UUID serial:ticketLedger.recoverHeld())getLogger().info("Recovered interrupted ticket hold: "+serial);}catch(Exception e){ticketFault=true;getLogger().severe("Ticket ledger locked: "+e);}
             apply(config.load());
-            admin=new PaperAdmin(this);
+            admin=new PaperAdmin(this);textInput=new AdminTextInput(this);waystoneAdmin=new PaperWaystoneAdmin(this);
             if(!ticketFault)exchange=new PaperExchange(this,ticketLedger,snapshot.ticketMaterial(),snapshot.ticketName());
             dbTask=getServer().getScheduler().runTaskAsynchronously(this,()->{
                 try{FoundationDatabase.initialize(root.resolve("data/dungeon.db"));database.set("ready");}
@@ -91,7 +93,7 @@ public final class ArunikaDungeonPlugin extends JavaPlugin implements DungeonGat
             if(next.gateway().enabled())try{gateway=new PaperGateway(this,next.gateway());getServer().getPluginManager().registerEvents(gateway,this);}catch(Exception|LinkageError e){if(gateway!=null){gateway.close();gateway=null;}getLogger().severe("Gateway locked: "+e.getMessage());}
             battleTick=getServer().getScheduler().runTaskTimer(this,()->{long now=now();boolean healthy=performanceOk();battle.tick(now,healthy);if(healthy)battlePort.drainProgression();if(now>=nextMaintenance){battlePort.maintenance();if(shared!=null)shared.tick(now,healthy);if(parties!=null)parties.tick(now,healthy&&!ticketFault);if(gateway!=null)gateway.refresh();nextMaintenance=now+1000;}},next.battleTicks(),next.battleTicks());
         }catch(Exception|LinkageError e){if(gateway!=null){gateway.close();gateway=null;}if(battleTick!=null){battleTick.cancel();battleTick=null;}if(battlePort!=null)HandlerList.unregisterAll(battlePort);battlePort=null;battle=null;shared=null;parties=null;tickets=null;getLogger().warning("Battle preview unavailable: "+e.getMessage());}
-        tick=getServer().getScheduler().runTaskTimer(this,registry::expire,next.intervalTicks(),next.intervalTicks());
+        tick=getServer().getScheduler().runTaskTimer(this,()->{registry.expire();if(textInput!=null)textInput.expire();},next.intervalTicks(),next.intervalTicks());
         getLogger().info("Configuration: "+next.floors().size()+" floors; "+next.changedFiles()+" files changed; backup="+next.backup());
         if(!next.warning().isEmpty())getLogger().warning(next.warning());
     }
@@ -269,7 +271,7 @@ public final class ArunikaDungeonPlugin extends JavaPlugin implements DungeonGat
         var cleanup=new ShutdownSteps((name,error)->getLogger().log(java.util.logging.Level.SEVERE,"Shutdown failed: "+name,error));
         cleanup.run("battle scheduler",()->{if(battleTick!=null)battleTick.cancel();});
         cleanup.run("maintenance scheduler",()->{if(tick!=null)tick.cancel();});
-        cleanup.run("admin GUI",()->{if(admin!=null)admin.close();});
+        cleanup.run("admin GUI",()->{if(admin!=null)admin.close();if(waystoneAdmin!=null)waystoneAdmin.close();if(textInput!=null)textInput.close();});
         cleanup.run("gateway GUI",()->{if(gateway!=null)gateway.close();});
         cleanup.run("Exchange",()->{if(exchange!=null)exchange.close();});
         cleanup.run("active battle cleanup",()->{if(battle!=null)battle.abortAll(now());});
@@ -299,6 +301,33 @@ public final class ArunikaDungeonPlugin extends JavaPlugin implements DungeonGat
     boolean configurationBusy(){return configBusy;}
     SmartConfiguration.Snapshot adminSnapshot(){return snapshot;}
     List<site.cadera.arunika.dungeon.exchange.ExchangeCatalog.Reward> adminExchangeRewards(){return exchange==null?List.of():exchange.adminRewards();}
+    public boolean waystoneSetupIdle(){return !configBusy&&sessions!=null&&sessions.snapshot().isEmpty()&&(shared==null||shared.empty())&&(parties==null||parties.empty())&&payments.isEmpty()&&(battlePort==null||!battlePort.hasPendingReturns());}
+    AdminTextInput adminInput(){return textInput;}
+    boolean exchangeEnabled(){return exchange!=null&&exchange.adminEnabled();}
+    boolean exchangeTokenReady(){return exchange!=null&&exchange.adminTokenReady();}
+    String exchangeStatus(){return exchange==null?"Exchange belum siap":exchange.status();}
+    public void openExchangeAdmin(Player p){if(admin!=null&&(p.hasPermission("arunika.dg.admin")||p.hasPermission("arunika.dungeon.admin")))admin.exchange(p,0);else p.sendMessage("Tidak ada permission admin penukaran");}
+    public void openWaystoneAdmin(Player p){if(waystoneAdmin!=null&&p.hasPermission("arunika.dungeon.admin")&&p.hasPermission("arunika.dungeonwaystone.admin"))waystoneAdmin.home(p,0);else p.sendMessage("Memerlukan permission admin Dungeon dan Waystone");}
+    void exchangeGuiCommand(Player p,String[] args){if(exchange!=null)exchange.guiCommand(p,args);}
+    void applyWaystoneBindings(Player p){importGateway(p);}
+    void setArenaSpawn(Player p,String floor,String arena){
+        try{
+            if(!p.hasPermission("arunika.dungeon.admin"))throw new IllegalStateException("Tidak ada permission");
+            var plan=snapshot.battles().get(floor);if(plan==null)throw new IllegalArgumentException("Floor belum aktif/dikonfigurasi");
+            var old=plan.arenas().stream().filter(a->a.id().equals(arena)).findFirst().orElseThrow(()->new IllegalArgumentException("Arena tidak ditemukan"));
+            if(!PaperBattlePort.safeDestination(p.getLocation()))throw new IllegalArgumentException("Berdiri di posisi spawn aman dalam chunk loaded");
+            var next=new BattlePlan.Arena(old.id(),old.mode(),old.bounds(),PaperBattlePort.point(p.getLocation()),old.mobSpawns(),old.bossSpawn(),old.exit());
+            adminEdit(p,floor,"arena",null,0,0,next);
+        }catch(RuntimeException e){p.sendMessage("Spawn arena ditolak: "+e.getMessage());}
+    }
+    void setDungeonModes(Player p,boolean enabled){
+        if(!p.hasPermission("arunika.dungeon.admin"))return;
+        if(configBusy||(exchange!=null&&exchange.hasOperation())||!sessions.snapshot().isEmpty()||(shared!=null&&!shared.empty())||(parties!=null&&!parties.empty())||!payments.isEmpty()||(battlePort!=null&&battlePort.hasPendingReturns())){p.sendMessage("Sesi/operasi aktif; pengaturan ditolak");return;}
+        configBusy=true;Bukkit.getScheduler().runTaskAsynchronously(this,()->{
+            try{var next=config.setModes(enabled);Bukkit.getScheduler().runTask(this,()->{try{apply(next);p.sendMessage("Mode Dungeon "+(enabled?"diaktifkan":"dinonaktifkan")+". Backup: "+next.backup());}catch(RuntimeException e){p.sendMessage("Konfigurasi tersimpan, penerapan runtime gagal: "+e.getMessage());getLogger().severe("Mode config apply failed: "+e);}finally{configBusy=false;}});}
+            catch(Exception e){Bukkit.getScheduler().runTask(this,()->{configBusy=false;p.sendMessage("Pengaturan ditolak: "+e.getMessage());});}
+        });
+    }
     void adminEdit(CommandSender sender,String floor,String action,String id,int number,int amount,BattlePlan.Arena arena){
         if(!sender.hasPermission("arunika.dungeon.admin"))return;
         if(configBusy||(exchange!=null&&exchange.hasOperation())||!sessions.storageHealthy()||!sessions.snapshot().isEmpty()||(shared!=null&&!shared.empty())||(parties!=null&&!parties.empty())||!payments.isEmpty()||(battlePort!=null&&battlePort.hasPendingReturns())){sender.sendMessage("Configuration busy or session/queue/pending returns active; edit refused.");return;}
@@ -334,6 +363,8 @@ public final class ArunikaDungeonPlugin extends JavaPlugin implements DungeonGat
     }
     @Override public boolean onCommand(CommandSender sender,Command command,String label,String[] args){
         if(command.getName().equalsIgnoreCase("dg")||command.getName().equalsIgnoreCase("opdg")){if(exchange!=null)exchange.command(sender,command.getName().equalsIgnoreCase("opdg"),args);else sender.sendMessage("Exchange not ready");return true;}
+        if(args.length>0&&args[0].equalsIgnoreCase("waystones")&&sender instanceof Player p){openWaystoneAdmin(p);return true;}
+        if(args.length>0&&args[0].equalsIgnoreCase("setspawn")&&sender instanceof Player p){if(args.length==3)setArenaSpawn(p,args[1],args[2]);else p.sendMessage("/adg setspawn <floor> <arena> (berdiri di tujuan)");return true;}
         if(args.length>0&&args[0].equalsIgnoreCase("exchange")){if(exchange!=null)exchange.command(sender,args.length>1&&args[1].equalsIgnoreCase("admin"),Arrays.copyOfRange(args,args.length>1&&args[1].equalsIgnoreCase("admin")?2:1,args.length));else sender.sendMessage("Exchange not ready");return true;}
         if(args.length>0&&args[0].equalsIgnoreCase("gateway")){if(args.length==2&&args[1].equalsIgnoreCase("import")){importGateway(sender);return true;}if(args.length==2&&args[1].equalsIgnoreCase("check")){if(sender.hasPermission("arunika.dungeon.admin"))PaperGateway.check(this,sender);else sender.sendMessage("No permission.");return true;}if(sender instanceof Player p){if(args.length==2&&args[1].equalsIgnoreCase("open")&&gateway!=null)gateway.openTarget(p);else if(p.hasPermission("arunika.dungeon.admin"))PaperGateway.inspect(this,p);else sender.sendMessage("Use the physical Waystone.");}else sender.sendMessage("Player required");return true;}
         if(snapshot!=null&&snapshot.gateway().enabled()&&args.length>0&&(args[0].equalsIgnoreCase("shared")||(args[0].equalsIgnoreCase("private")&&args.length>1&&!Set.of("status","accept","decline","ready","unready","leave").contains(args[1].toLowerCase(Locale.ROOT))))&&args.length>1&&!args[1].equalsIgnoreCase("status")){sender.sendMessage("Use the Dungeon Hub Waystone.");return true;}
@@ -344,7 +375,7 @@ public final class ArunikaDungeonPlugin extends JavaPlugin implements DungeonGat
         String sub=args.length==0?"status":args[0].toLowerCase(Locale.ROOT);
         switch(sub){
             case "status" -> {
-                sender.sendMessage("[ArunikaDungeon 1.0.2-RC1] Shared/Private staging");
+                sender.sendMessage("[ArunikaDungeon 1.0.3-RC2] Shared/Private staging");
                 sender.sendMessage("Battle: "+(battle!=null)+" | Shared: "+(shared!=null)+" | Private: "+(parties!=null&&!ticketFault)+" | Gateway: "+(gateway!=null));
                 sender.sendMessage("Exchange: "+(exchange==null?"not ready":exchange.status()));
                 sender.sendMessage("RPG: "+(snapshot.rpg().active()?"configured (provider required)":"disabled")+" | provider: "+(Bukkit.getServicesManager().getRegistration(DungeonRpgApi.class)!=null));

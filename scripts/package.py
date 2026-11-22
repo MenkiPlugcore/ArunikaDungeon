@@ -2,7 +2,7 @@
 from pathlib import Path
 import zipfile,hashlib,shutil,json,struct
 root=Path(__file__).resolve().parents[1];out=root/'dist';out.mkdir(exist_ok=True)
-modules=[('arunika-dungeon','ArunikaDungeon','1.0.2-RC1'),('arunika-dungeon-waystone','ArunikaDungeonWaystone','1.0.0-RC1'),('arunika-dungeon-waystone-bedrock','ArunikaDungeonWaystoneBedrock','1.0.0-RC1')]
+modules=[('arunika-dungeon','ArunikaDungeon','1.0.3-RC2'),('arunika-dungeon-waystone','ArunikaDungeonWaystone','1.0.1-RC2'),('arunika-dungeon-waystone-bedrock','ArunikaDungeonWaystoneBedrock','1.0.1-RC2')]
 for module,name,version in modules:
  jar=root/module/'target'/f'{name}-{version}.jar';assert jar.is_file(),jar
  with zipfile.ZipFile(jar) as z:

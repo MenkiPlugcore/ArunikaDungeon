@@ -1,3 +1,5 @@
+> Laporan historis RC1. Pengujian upgrade GUI/nama ada di **RC2-TEST-REPORT.md**.
+
 # Audit lengkap — RC1 / STAGING
 
 Audit dimulai21November2026 dan paket diselesaikan22November2026. Ketujuh belas checksum input cocok sebelum perubahan. Source canonical menggunakan Dungeon reconstructed Phase7+8+9, core Phase10, dan Bedrock Phase11. ZIP input asli disimpan sebagai provenance; build tidak memerlukan rantai patch tersebut.

@@ -1,3 +1,5 @@
+> Laporan historis RC1. Pengujian upgrade GUI/nama ada di **RC2-TEST-REPORT.md**.
+
 # Build provenance
 
 Input ZIP SHA256: e9d0956a018cdce905bb5380dcb9a0d04957fe63769c588060ebe3644aa97ace

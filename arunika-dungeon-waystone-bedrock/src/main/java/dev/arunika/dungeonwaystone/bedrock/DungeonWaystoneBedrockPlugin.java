@@ -97,7 +97,7 @@ public final class DungeonWaystoneBedrockPlugin extends JavaPlugin implements Li
             if (!definitionsReady) getLogger().warning(
                 "Dungeon Bedrock model definitions not registered. Perform FULL server STOP/START; check Geyser API compatibility.");
         },100L);
-        getLogger().info("Dungeon Bedrock renderer v1.0.0-RC1: " + apiStatus
+        getLogger().info("Dungeon Bedrock renderer v1.0.1-RC2: " + apiStatus
               + "; uses Blackstone=HUB, Portstone=RETURN; model API ready=" + definitionsReady);
     }
 
@@ -304,7 +304,7 @@ public final class DungeonWaystoneBedrockPlugin extends JavaPlugin implements Li
         if(op.equals("refresh")){sync();sender.sendMessage("Dungeon Bedrock model sync requested.");return true;}
         if(!op.equals("status")){sender.sendMessage("/adwbedrock <status|refresh|reload>");return true;}
         long bedrock=Bukkit.getOnlinePlayers().stream().filter(this::bedrock).count();
-        sender.sendMessage("[ADW Bedrock 1.0.0-RC1] "+apiStatus+" | registered="+definitionsReady
+        sender.sendMessage("[ADW Bedrock 1.0.1-RC2] "+apiStatus+" | registered="+definitionsReady
          +" ("+definitions.size()+"/2) | packValid="+packValid+" | packsRequired="+packsRequired+" | callbackFailed="+callbackFailed+" | proxies="+visuals.size()+" | Bedrock online="+bedrock);
         return true;
     }

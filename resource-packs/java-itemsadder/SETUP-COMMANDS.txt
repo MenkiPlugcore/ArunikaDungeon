@@ -1,0 +1,13 @@
+# Run in-game as an admin after copying content, rebuilding and accepting the ItemsAdder pack.
+/iareload
+/iazip
+
+# Wait until resource-pack generation finishes, then accept/rejoin with the new pack.
+/adw model hub arunika_dungeon_waystones:waystone_blackstone
+/adw model return arunika_dungeon_waystones:waystone_portstone
+/adw refresh
+/adw status
+
+# Optional asset inspection only; items are not registered Dungeon gateways:
+/iaget arunika_dungeon_waystones:waystone_blackstone
+/iaget arunika_dungeon_waystones:waystone_portstone

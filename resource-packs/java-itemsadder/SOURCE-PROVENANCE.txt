@@ -1,0 +1,3 @@
+Uploaded input: archive-2026-11-22T041230Z.tar.gz
+SHA256: ecafc2102ecfa1896c7e338da8851542915a920a26926fa6deb23233f13910f5
+Input contains 19 models, one ItemsAdder config and textures. Output includes only Blackstone/Portstone dependencies. Original input untouched.

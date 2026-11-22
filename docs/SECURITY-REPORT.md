@@ -1,3 +1,5 @@
+> Laporan historis RC1. Pengujian upgrade GUI/nama ada di **RC2-TEST-REPORT.md**.
+
 # Keamanan dan anti-dupe
 
 Ledger tiket tetap serial+generation durable. Hold sebelum debit, commit sebelum konsumsi fisik, exposure durable sebelum reward. Refund menaikkan generation; serial fisik lama tidak valid. EXPOSED/CONSUMED tidak dapat direfund. Hanya tiket leader digunakan.

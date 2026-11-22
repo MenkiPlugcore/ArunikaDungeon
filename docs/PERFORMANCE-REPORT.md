@@ -1,3 +1,5 @@
+> Laporan historis RC1. Pengujian upgrade GUI/nama ada di **RC2-TEST-REPORT.md**.
+
 # Performa
 
 Tidak ada benchmark TPS/MSPT/CPU/RAM50pemain. Tidak ada klaim persentase peningkatan.

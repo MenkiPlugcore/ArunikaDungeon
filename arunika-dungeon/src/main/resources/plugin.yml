@@ -1,5 +1,5 @@
 name: ArunikaDungeon
-version: '1.0.2-RC1'
+version: '1.0.3-RC2'
 main: site.cadera.arunika.dungeon.paper.ArunikaDungeonPlugin
 api-version: '1.21.11'
 author: Cadera
@@ -12,7 +12,7 @@ commands:
   arunikadungeon:
     aliases: [adg]
     description: Foundation diagnostics and opt-in staging battle preview
-    usage: /adg [status|legacy|create|reload|preview|shared|private|ticket|loot|gateway|diagnostics|admin|setup|help]
+    usage: /adg [status|legacy|create|reload|preview|shared|private|ticket|loot|gateway|diagnostics|admin|waystones|setspawn|setup|help]
   dg:
     description: Dungeon Exchange (legacy owner has priority)
     permission: arunika.dg.use

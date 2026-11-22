@@ -1,0 +1,299 @@
+{
+  "credit": "Adapted for Vephilim ItemsAdder from user-provided 1.21.11 Waystones texture pack",
+  "textures": {
+    "b_5": "arunika_dungeon_waystones:source/waystones/andesite_waystone_bottom_top",
+    "b_3": "arunika_dungeon_waystones:source/waystones/portstone_top",
+    "b_4": "arunika_dungeon_waystones:source/waystones/andesite_waystone_bottom_bottom",
+    "b_2": "arunika_dungeon_waystones:source/waystones/portstone_top_bottom",
+    "b_7": "arunika_dungeon_waystones:source/waystones/portstone_top_top",
+    "b_6": "arunika_dungeon_waystones:source/waystones/andesite_waystone_bottom_top_top",
+    "particle": "arunika_dungeon_waystones:source/waystones/andesite_waystone_bottom_bottom"
+  },
+  "elements": [
+    {
+      "name": "pillarBottom",
+      "from": [
+        3,
+        9,
+        3
+      ],
+      "to": [
+        13,
+        14,
+        13
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            3,
+            2,
+            13,
+            7
+          ],
+          "texture": "#b_2"
+        },
+        "east": {
+          "uv": [
+            3,
+            2,
+            13,
+            7
+          ],
+          "texture": "#b_2"
+        },
+        "south": {
+          "uv": [
+            3,
+            2,
+            13,
+            7
+          ],
+          "texture": "#b_2"
+        },
+        "west": {
+          "uv": [
+            3,
+            2,
+            13,
+            7
+          ],
+          "texture": "#b_2"
+        },
+        "up": {
+          "uv": [
+            3,
+            3,
+            13,
+            13
+          ],
+          "texture": "#b_5"
+        },
+        "down": {
+          "uv": [
+            3,
+            3,
+            13,
+            13
+          ],
+          "texture": "#b_6"
+        }
+      }
+    },
+    {
+      "name": "pillarBottom",
+      "from": [
+        4,
+        14,
+        5
+      ],
+      "to": [
+        12,
+        20,
+        10
+      ],
+      "rotation": {
+        "angle": 22.5,
+        "axis": "x",
+        "origin": [
+          8,
+          14,
+          5
+        ]
+      },
+      "faces": {
+        "north": {
+          "uv": [
+            5,
+            10,
+            13,
+            16
+          ],
+          "texture": "#b_7"
+        },
+        "east": {
+          "uv": [
+            0,
+            10,
+            5,
+            16
+          ],
+          "texture": "#b_7"
+        },
+        "south": {
+          "uv": [
+            5,
+            10,
+            13,
+            16
+          ],
+          "texture": "#b_7"
+        },
+        "west": {
+          "uv": [
+            0,
+            10,
+            5,
+            16
+          ],
+          "texture": "#b_7"
+        },
+        "up": {
+          "uv": [
+            5,
+            5,
+            13,
+            10
+          ],
+          "texture": "#b_7"
+        },
+        "down": {
+          "uv": [
+            5,
+            5,
+            13,
+            10
+          ],
+          "texture": "#b_7"
+        }
+      }
+    },
+    {
+      "name": "pillarBottom",
+      "from": [
+        1,
+        3,
+        1
+      ],
+      "to": [
+        15,
+        9,
+        15
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            1,
+            7,
+            15,
+            13
+          ],
+          "texture": "#b_2"
+        },
+        "east": {
+          "uv": [
+            1,
+            7,
+            15,
+            13
+          ],
+          "texture": "#b_2"
+        },
+        "south": {
+          "uv": [
+            1,
+            7,
+            15,
+            13
+          ],
+          "texture": "#b_2"
+        },
+        "west": {
+          "uv": [
+            1,
+            7,
+            15,
+            13
+          ],
+          "texture": "#b_2"
+        },
+        "up": {
+          "uv": [
+            1,
+            1,
+            15,
+            15
+          ],
+          "texture": "#b_6"
+        },
+        "down": {
+          "uv": [
+            1,
+            1,
+            15,
+            15
+          ],
+          "texture": "#b_3"
+        }
+      }
+    },
+    {
+      "name": "pillarBottom",
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "to": [
+        16,
+        3,
+        16
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            13,
+            16,
+            16
+          ],
+          "texture": "#b_2"
+        },
+        "east": {
+          "uv": [
+            0,
+            13,
+            16,
+            16
+          ],
+          "texture": "#b_2"
+        },
+        "south": {
+          "uv": [
+            0,
+            13,
+            16,
+            16
+          ],
+          "texture": "#b_2"
+        },
+        "west": {
+          "uv": [
+            0,
+            13,
+            16,
+            16
+          ],
+          "texture": "#b_2"
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#b_5"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#b_4"
+        }
+      }
+    }
+  ]
+}

@@ -127,6 +127,13 @@ public final class SmartConfiguration {
             byte[] bytes=codec.write(data);if(bytes.length>2_000_000)throw new IOException("Edit too large");plan.put(rel,bytes);return build(null,0,null,null,plan);
         });
     }
+    public Snapshot setModes(boolean enabled)throws IOException{
+        return tx.locked(()->{
+            var values=codec.read(Files.readAllBytes(tx.path("config.yml")));
+            for(String key:List.of("battle-preview","shared-preview","private-preview","loot-preview"))values.put(key,enabled);
+            return build(null,0,null,null,new LinkedHashMap<>(Map.of("config.yml",codec.write(values))));
+        });
+    }
     /** Import reviewed dungeon-only bindings and synchronize exits in one recoverable config transaction. */
     public Snapshot importGateway(Map<String,Object> exported,boolean enable)throws IOException{
         return tx.locked(()->{
